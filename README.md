@@ -13,8 +13,10 @@ code/            runnable code: TSLib fork (run.py, data_provider, models, layer
                  + tsfm/     (Chronos-Bolt zero-shot evaluation, latent-action probes)
 scripts/         run manifests and schedulers (gen_cmds.py emits every launch command verbatim)
 results/logs/    per-run training logs, aggregation summaries, and verdict files (the run ledger)
-paper/           anonymous manuscript source
 ```
+
+The manuscript PDF is available on OpenReview; this repository contains everything needed to
+reproduce every number in it.
 
 ## Evidence index (paper artifact -> source)
 
