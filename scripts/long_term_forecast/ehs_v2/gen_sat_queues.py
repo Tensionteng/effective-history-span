@@ -41,7 +41,7 @@ for i, c in enumerate(cmds):
 for gpu, q in zip(GPUS, queues):
     path = f'scripts/long_term_forecast/ehs_v2/sat_queue_gpu{gpu}.sh'
     with open(path, 'w') as f:
-        f.write('#!/bin/bash\nset -u\ncd /mnt/jd/users/tengshiyuan.1/codes/Time-Series-Library\n')
+        f.write('#!/bin/bash\nset -u\ncd .\n')
         for c in q:
             log = re.search(r'> (\S+\.log)', c).group(1)
             c2 = re.sub(r'CUDA_VISIBLE_DEVICES=\d+', f'CUDA_VISIBLE_DEVICES={gpu}', c)
