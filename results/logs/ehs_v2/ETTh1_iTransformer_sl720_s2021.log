@@ -1,0 +1,89 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_ETTh1_iTransformer_720_s2021Model:              iTransformer        
+
+[1mData Loader[0m
+  Data:               ETTh1               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh1.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            720                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            128                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               128                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: iTransformer ...
+>>>>>>>start training : long_term_forecast_LBv2_ETTh1_iTransformer_720_s2021_iTransformer_ETTh1_ftM_sl720_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 5665/7825 windows (max_train_windows=5665)
+train 5665
+val 2785
+test 2785
+	iters: 100, epoch: 1 | loss: 0.4545003
+	speed: 0.1718s/iter; left time: 288.8174s
+Epoch: 1 cost time: 29.29176664352417
+Epoch: 1, Steps: 178 | Train Loss: 0.4893045 Vali Loss: 0.8119657 Test Loss: 0.4165882
+Validation loss decreased (inf --> 0.811966).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.4043683
+	speed: 0.6839s/iter; left time: 1027.9752s
+Epoch: 2 cost time: 36.392502784729004
+Epoch: 2, Steps: 178 | Train Loss: 0.3916369 Vali Loss: 0.7577032 Test Loss: 0.3977907
+Validation loss decreased (0.811966 --> 0.757703).  Saving model ...
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.3950380
+	speed: 0.7412s/iter; left time: 982.1300s
+Epoch: 3 cost time: 37.72637581825256
+Epoch: 3, Steps: 178 | Train Loss: 0.3705824 Vali Loss: 0.7468953 Test Loss: 0.3949361
+Validation loss decreased (0.757703 --> 0.746895).  Saving model ...
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.3511360
+	speed: 0.7962s/iter; left time: 913.2608s
+Epoch: 4 cost time: 41.55296778678894
+Epoch: 4, Steps: 178 | Train Loss: 0.3642142 Vali Loss: 0.7623107 Test Loss: 0.3931444
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 1.25e-05
+	iters: 100, epoch: 5 | loss: 0.3713180
+	speed: 0.8607s/iter; left time: 834.0187s
+Epoch: 5 cost time: 42.0818727016449
+Epoch: 5, Steps: 178 | Train Loss: 0.3605385 Vali Loss: 0.7474703 Test Loss: 0.3931632
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 6.25e-06
+	iters: 100, epoch: 6 | loss: 0.3737548
+	speed: 0.8570s/iter; left time: 677.8762s
+Epoch: 6 cost time: 44.50335955619812
+Epoch: 6, Steps: 178 | Train Loss: 0.3600129 Vali Loss: 0.7539164 Test Loss: 0.3927504
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBv2_ETTh1_iTransformer_720_s2021_iTransformer_ETTh1_ftM_sl720_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2785
+test shape: (2785, 96, 7) (2785, 96, 7)
+test shape: (2785, 96, 7) (2785, 96, 7)
+mse:0.3946698307991028, mae:0.4262879192829132, dtw:Not calculated

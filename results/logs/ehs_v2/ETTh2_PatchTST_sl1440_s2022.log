@@ -1,0 +1,83 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_ETTh2_PatchTST_1440_s2022Model:              PatchTST            
+
+[1mData Loader[0m
+  Data:               ETTh2               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh2.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            1440                Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            512                 
+  n heads:            4                   e layers:           3                   
+  d layers:           1                   d FF:               2048                
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: PatchTST ...
+>>>>>>>start training : long_term_forecast_LBv2_ETTh2_PatchTST_1440_s2022_PatchTST_ETTh2_ftM_sl1440_ll48_pl96_dm512_nh4_el3_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 5665/7105 windows (max_train_windows=5665)
+train 5665
+val 2785
+test 2785
+	iters: 100, epoch: 1 | loss: 0.4650562
+	speed: 0.1236s/iter; left time: 207.7780s
+Epoch: 1 cost time: 19.578967809677124
+Epoch: 1, Steps: 178 | Train Loss: 0.7322199 Vali Loss: 0.9045749 Test Loss: 0.4898815
+Validation loss decreased (inf --> 0.904575).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.4120377
+	speed: 0.2601s/iter; left time: 390.9397s
+Epoch: 2 cost time: 19.260082006454468
+Epoch: 2, Steps: 178 | Train Loss: 0.5212332 Vali Loss: 0.3286461 Test Loss: 0.3326799
+Validation loss decreased (0.904575 --> 0.328646).  Saving model ...
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.4575492
+	speed: 0.2606s/iter; left time: 345.3250s
+Epoch: 3 cost time: 19.275896072387695
+Epoch: 3, Steps: 178 | Train Loss: 0.3401905 Vali Loss: 0.3326839 Test Loss: 0.3515530
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.2349221
+	speed: 0.2597s/iter; left time: 297.8734s
+Epoch: 4 cost time: 19.28635048866272
+Epoch: 4, Steps: 178 | Train Loss: 0.2947458 Vali Loss: 0.3710115 Test Loss: 0.3708013
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.25e-05
+	iters: 100, epoch: 5 | loss: 0.2594541
+	speed: 0.2600s/iter; left time: 251.9136s
+Epoch: 5 cost time: 19.27217388153076
+Epoch: 5, Steps: 178 | Train Loss: 0.2796627 Vali Loss: 0.3455548 Test Loss: 0.3476106
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBv2_ETTh2_PatchTST_1440_s2022_PatchTST_ETTh2_ftM_sl1440_ll48_pl96_dm512_nh4_el3_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2785
+test shape: (2785, 96, 7) (2785, 96, 7)
+test shape: (2785, 96, 7) (2785, 96, 7)
+mse:0.3336763381958008, mae:0.39354172348976135, dtw:Not calculated

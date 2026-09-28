@@ -1,0 +1,70 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBsat_electricity_DLinear_336_s2022Model:              DLinear             
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/electricity/
+  Data Path:          electricity.csv     Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            336                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             321                 Dec In:             321                 
+  C Out:              321                 d model:            512                 
+  n heads:            8                   e layers:           3                   
+  d layers:           1                   d FF:               512                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       10                  Batch Size:         16                  
+  Patience:           3                   Learning Rate:      0.0005              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: DLinear ...
+>>>>>>>start training : long_term_forecast_LBsat_electricity_DLinear_336_s2022_DLinear_custom_ftM_sl336_ll48_pl96_dm512_nh8_el3_dl1_df512_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 12557/17981 windows (max_train_windows=12557)
+train 12557
+val 2537
+test 5165
+	iters: 100, epoch: 1 | loss: 0.1685748
+	speed: 0.4272s/iter; left time: 3311.2853s
+	iters: 200, epoch: 1 | loss: 0.1527116
+	speed: 0.3319s/iter; left time: 2539.6908s
+	iters: 300, epoch: 1 | loss: 0.1403021
+	speed: 0.3389s/iter; left time: 2558.8644s
+	iters: 400, epoch: 1 | loss: 0.1382838
+	speed: 0.3331s/iter; left time: 2482.2979s
+	iters: 500, epoch: 1 | loss: 0.1389358
+	speed: 0.3433s/iter; left time: 2523.6571s
+	iters: 600, epoch: 1 | loss: 0.1426013
+	speed: 0.3359s/iter; left time: 2435.9080s
+	iters: 700, epoch: 1 | loss: 0.1334471
+	speed: 0.3413s/iter; left time: 2440.8117s
+Epoch: 1 cost time: 265.68112325668335
+Epoch: 1, Steps: 785 | Train Loss: 0.1626335 Vali Loss: 0.1249580 Test Loss: 0.1460551
+Validation loss decreased (inf --> 0.124958).  Saving model ...
+Updating learning rate to 0.0005
+	iters: 100, epoch: 2 | loss: 0.1521036
+	speed: 4.8983s/iter; left time: 34121.3057s
+	iters: 200, epoch: 2 | loss: 0.1393374
+	speed: 0.3272s/iter; left time: 2246.6145s

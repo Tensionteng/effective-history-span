@@ -1,0 +1,83 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_ETTh1_TimesNet_720_s2021Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               ETTh1               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh1.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            720                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            16                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               32                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: TimesNet ...
+>>>>>>>start training : long_term_forecast_LBv2_ETTh1_TimesNet_720_s2021_TimesNet_ETTh1_ftM_sl720_ll48_pl96_dm16_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 5665/7825 windows (max_train_windows=5665)
+train 5665
+val 2785
+test 2785
+	iters: 100, epoch: 1 | loss: 0.4681696
+	speed: 0.0746s/iter; left time: 125.4456s
+Epoch: 1 cost time: 9.769126892089844
+Epoch: 1, Steps: 178 | Train Loss: 0.5328986 Vali Loss: 0.9617360 Test Loss: 0.4623226
+Validation loss decreased (inf --> 0.961736).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.4118891
+	speed: 0.1107s/iter; left time: 166.3315s
+Epoch: 2 cost time: 7.903240919113159
+Epoch: 2, Steps: 178 | Train Loss: 0.3794279 Vali Loss: 0.9384049 Test Loss: 0.4235955
+Validation loss decreased (0.961736 --> 0.938405).  Saving model ...
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.3277754
+	speed: 0.1085s/iter; left time: 143.8067s
+Epoch: 3 cost time: 7.854045152664185
+Epoch: 3, Steps: 178 | Train Loss: 0.3449247 Vali Loss: 0.9514944 Test Loss: 0.4189865
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.3275553
+	speed: 0.1083s/iter; left time: 124.1708s
+Epoch: 4 cost time: 7.908775091171265
+Epoch: 4, Steps: 178 | Train Loss: 0.3313373 Vali Loss: 0.9671874 Test Loss: 0.4196033
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.25e-05
+	iters: 100, epoch: 5 | loss: 0.3810386
+	speed: 0.1092s/iter; left time: 105.8626s
+Epoch: 5 cost time: 7.987414836883545
+Epoch: 5, Steps: 178 | Train Loss: 0.3266609 Vali Loss: 0.9601294 Test Loss: 0.4167762
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBv2_ETTh1_TimesNet_720_s2021_TimesNet_ETTh1_ftM_sl720_ll48_pl96_dm16_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2785
+test shape: (2785, 96, 7) (2785, 96, 7)
+test shape: (2785, 96, 7) (2785, 96, 7)
+mse:0.42280927300453186, mae:0.4468149244785309, dtw:Not calculated

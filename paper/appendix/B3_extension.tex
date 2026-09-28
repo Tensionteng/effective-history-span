@@ -1,0 +1,32 @@
+\section{Extended Suite Sweep}
+\label{app:ext}
+
+Six additional public datasets were swept under the identical equal-data-budget protocol (sources and preprocessing are documented in the accompanying repository; the wind candidate was rejected for market-wide block missingness). Table \ref{tab:ext} gives the full matrices; the classification replicates the main suite: five of the six are periodicity-dominated with long or unbounded optimal spans, and the single drift-dominated newcomer (ERCOT settlement prices) is the only one whose iTransformer optimum is short.
+
+\begin{table}[h]
+\caption{Equal-budget lookback sweep on the six extension datasets (test MSE, mean $\pm$ std over seeds 2021--2023; bold = best lookback of the row).}
+\label{tab:ext}
+\centering\footnotesize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcccccc}
+\toprule
+Model & Dataset & $L{=}96$ & $L{=}336$ & $L{=}720$ & $L{=}1440$ & $L{=}2880$ & Best \\
+\midrule
+\multirow{6}{*}{iTransformer}
+ & solar & $0.2205{\pm}0.0123$ & $0.2151{\pm}0.0098$ & $0.1868{\pm}0.0045$ & $0.1839{\pm}0.0209$ & $\mathbf{0.1815}{\pm}0.0071$ & 2880 \\
+ & PEMS04 & $0.8700{\pm}0.0006$ & $0.6431{\pm}0.0052$ & $0.6582{\pm}0.0016$ & $\mathbf{0.5727}{\pm}0.0073$ & $0.5915{\pm}0.0079$ & 1440 \\
+ & PEMS08 & $0.9716{\pm}0.0027$ & $0.7354{\pm}0.0023$ & $0.7266{\pm}0.0094$ & $0.6936{\pm}0.0097$ & $\mathbf{0.6284}{\pm}0.0080$ & 2880 \\
+ & bikes & $0.2340{\pm}0.0007$ & $0.2165{\pm}0.0005$ & $0.2145{\pm}0.0003$ & $0.2147{\pm}0.0005$ & $\mathbf{0.2109}{\pm}0.0002$ & 2880 \\
+ & pedestrian & $0.3552{\pm}0.0041$ & $0.2370{\pm}0.0007$ & $\mathbf{0.2330}{\pm}0.0004$ & $0.2479{\pm}0.0028$ & $0.2519{\pm}0.0030$ & 720 \\
+ & ercot & $0.2249{\pm}0.0007$ & $\mathbf{0.2117}{\pm}0.0011$ & $0.2173{\pm}0.0010$ & $0.2251{\pm}0.0005$ & $0.2278{\pm}0.0015$ & 336 \\
+\midrule
+\multirow{6}{*}{DLinear}
+ & solar & $0.2858{\pm}0.0015$ & $0.2217{\pm}0.0002$ & $0.1906{\pm}0.0000$ & $\mathbf{0.1763}{\pm}0.0002$ & $0.1778{\pm}0.0001$ & 1440 \\
+ & PEMS04 & $0.9197{\pm}0.0024$ & $0.7312{\pm}0.0037$ & $0.7313{\pm}0.0026$ & $0.6921{\pm}0.0061$ & $\mathbf{0.5665}{\pm}0.0003$ & 2880 \\
+ & PEMS08 & $1.0412{\pm}0.0010$ & $0.8562{\pm}0.0002$ & $0.8381{\pm}0.0015$ & $0.8131{\pm}0.0007$ & $\mathbf{0.6445}{\pm}0.0002$ & 2880 \\
+ & bikes & $0.3003{\pm}0.0016$ & $0.2276{\pm}0.0007$ & $0.2213{\pm}0.0002$ & $0.2174{\pm}0.0000$ & $\mathbf{0.2162}{\pm}0.0001$ & 2880 \\
+ & pedestrian & $0.4568{\pm}0.0001$ & $0.2387{\pm}0.0000$ & $0.2198{\pm}0.0000$ & $0.2138{\pm}0.0000$ & $\mathbf{0.2125}{\pm}0.0000$ & 2880 \\
+ & ercot & $0.2756{\pm}0.0033$ & $0.2370{\pm}0.0013$ & $0.2345{\pm}0.0020$ & $0.2380{\pm}0.0049$ & $\mathbf{0.2312}{\pm}0.0015$ & 2880 \\
+\bottomrule
+\end{tabular}}
+\end{table}

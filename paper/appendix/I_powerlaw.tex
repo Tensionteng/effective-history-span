@@ -1,0 +1,91 @@
+\section{The Power-Law Experiment}
+\label{app:powerlaw}
+
+This appendix specifies the controlled synthetic test of the bias--variance law $W^* \propto \lambda^{-2/3}$ behind Section \ref{sec:powerlaw} (generator, sweep configuration, fitting code, and all per-tier numbers are released in the accompanying repository).
+
+\subsection{Generator and drift-rate calibration}
+
+Each channel is an independent Poisson shock process: shocks arrive with probability $\lambda$ per step (so run lengths are geometric and $\mathbb{E}[\text{run}] = 1/\lambda$ exactly), each shock is a level step of amplitude $U(0.8, 2.0)$ with random sign (pure drift, no periodic component), on top of AR(1) base noise ($a{=}0.3$) with marginal $\sigma = 12$ (about $8\times$ the RMS step size). Series have $T{=}25000$ steps (train 17500 / validation 2500 / test 5000) and 4 channels. The sweep spans six nominal drift rates, $\mathbb{E}[r] \in \{50, 150, 400, 1000, 2500, 6000\}$.
+
+The high noise ratio is a load-bearing design choice. A first version with $\sigma{=}1$ (archived in the released logs) put the bias--variance optimum below the scan range for every $\lambda$: all $W^*$ were censored at the grid boundary $96$/$192$, and no exponent could be measured. Raising $\sigma$ to $12$ moves the optimum into the interior of $\{96, \dots, 2880\}$.
+
+\begin{table}[t]
+\caption{Drift-rate calibration: nominal expected run length, shock probability $\lambda$, measured expected run length, and the resulting drift index (Appendix \ref{app:stats}, $n_{\mathrm{seg}}{=}20$), mean $\pm$ std over 30 realizations $\times$ 4 channels. $\lambda$ maps strictly monotonically onto the measured drift index (adjacent levels are separated by 4--8 standard errors), and measured $\mathbb{E}[r]$ tracks the $1/\lambda$ diagonal. The periodic variants sit slightly below the pure-drift run at the same $\lambda$ (periodic energy inflates the denominator), which does not affect the $\lambda$ axis.}
+\label{tab:calibration}
+\centering\small
+\begin{tabular}{cccc}
+\toprule
+Nominal $\mathbb{E}[r]$ & $\lambda$ & Measured $\mathbb{E}[r]$ & Drift index \\
+\midrule
+50 & 0.020 & 50 & $0.3854 \pm 0.0173$ \\
+150 & 0.0067 & 160 & $0.1881 \pm 0.0118$ \\
+400 & 0.0025 & 429 & $0.0897 \pm 0.0069$ \\
+1000 & 0.0010 & 885 & $0.0402 \pm 0.0029$ \\
+2500 & 0.0004 & 2659 & $0.0160 \pm 0.0013$ \\
+6000 & 0.00017 & 5312 & $0.0087 \pm 0.0007$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Sweep protocol and the \texorpdfstring{$\lambda \times L$}{lambda x L} error surface}
+
+We train a small iTransformer ($d_{\mathrm{model}}{=}64$, $d_{\mathrm{ff}}{=}64$, $e_{\mathrm{layers}}{=}2$, 8 heads, batch 64, LR $10^{-3}$, at most 5 epochs with patience-3 early stopping, horizon 96) over lookbacks $L \in \{96, 192, 336, 720, 1440, 2880\}$ and seeds $\{2021, 2022\}$, all runs under the equal-data-budget protocol with $N_{\min} = 14525$ training windows (the count of the $L{=}2880$ run).
+
+\begin{table}[t]
+\caption{Test MSE (2-seed mean) on the pure-drift sweep; bold marks the grid argmin $W^*$. Every level shows an interior U-shaped minimum. Per-seed argmins agree on 5 of 6 levels (at \texttt{er6000} the curve is near-flat, adjacent cells differ by $\sim 2{\times}10^{-4}$, and the two seeds split between 1440 and 2880).}
+\label{tab:error_surface}
+\centering\small
+\begin{tabular}{lcccccc c}
+\toprule
+Dataset & 96 & 192 & 336 & 720 & 1440 & 2880 & $W^*$ (grid) \\
+\midrule
+drift\_er50 & 0.4794 & 0.4785 & \textbf{0.4783} & 0.4798 & 0.4823 & 0.4901 & 336 \\
+drift\_er150 & 0.7702 & 0.7650 & \textbf{0.7644} & 0.7663 & 0.7665 & 0.7742 & 336 \\
+drift\_er400 & 0.8978 & 0.8907 & \textbf{0.8889} & 0.8890 & 0.8907 & 0.8918 & 336 \\
+drift\_er1000 & 0.9898 & 0.9819 & 0.9800 & \textbf{0.9794} & 0.9828 & 0.9821 & 720 \\
+drift\_er2500 & 0.9951 & 0.9871 & 0.9849 & \textbf{0.9832} & 0.9836 & 0.9847 & 720 \\
+drift\_er6000 & 1.0086 & 1.0004 & 0.9979 & 0.9961 & \textbf{0.9958} & 0.9959 & 1440 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Fitting conventions and verdict}
+
+We fit $\ln W^*$ against $\ln \lambda$ by OLS under two conventions: the grid argmin above, and a parabolic interpolation of the error curve around the argmin (sensitivity analysis), giving interpolated $W^* = \{285, 308, 482, 546, 890, 1745\}$ for $\mathbb{E}[r] = 50 \to 6000$.
+
+\begin{table}[t]
+\caption{Log--log fits of $W^*$ against $\lambda$ under both conventions, against the classical prediction $-2/3$ (acceptance band $-0.667 \pm 0.15$). The power-law \emph{family} fits well ($W^*$ monotone decreasing in $\lambda$, high $R^2$) but the exponent is decisively shallower than $-2/3$; a single-constant $-2/3$ representation is also rejected by the instability of $c = W^* \lambda^{2/3}$ across levels (coefficient of variation $0.742$ grid / $0.600$ interpolated).}
+\label{tab:powerlaw_fit}
+\centering\small
+\begin{tabular}{lcccc}
+\toprule
+Estimator & Slope & Intercept & $R^2$ & Verdict vs.\ $-0.667 \pm 0.15$ \\
+\midrule
+Grid argmin & $-0.306$ & 4.361 & 0.823 & FAIL \\
+Parabolic-interpolated $W^*$ & $-0.368$ & 4.003 & 0.917 & FAIL \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Why $-2/3$ should not have been expected here.} The classical $-2/3$ exponent corresponds to continuous deterministic linear drift, where squared bias grows as $(\lambda W^2)$-type terms. For our stochastic generator the naive windowed-average derivation gives different exponents: Poisson \emph{level} steps yield bias$^2 \propto \lambda W$ against variance $\propto 1/W$, hence $W^* \propto \lambda^{-1/2}$; \emph{trend} steps yield $-1/4$. The measured $-0.31$ to $-0.37$ lies between $-1/4$ and $-1/2$, toward the shallow end --- consistent with the model's learnable weighting (instance-normalization window centering plus attention down-weighting of stale regimes) softening bias growth relative to a plain window average. The exponent is therefore a property of the drift process \emph{and} the estimator class, not a universal constant; what transfers is the power-law family and the monotone direction.
+
+\subsection{The periodicity axis}
+
+Adding a regime-invariant periodic skeleton, $12\sin(2\pi t/96 + \phi) + 6\sin(2\pi t/48 + 2\phi)$ ($\approx 1\sigma$ amplitude), to two drift levels shifts $W^*$ systematically upward (Table \ref{tab:p_axis}), in the direction predicted by the two-axis account: periodic structure persists across regimes and rewards longer windows.
+
+\begin{table}[t]
+\caption{Periodic variants: test MSE (2-seed mean) and $W^*$ against the pure-drift run at the same $\lambda$. Both levels move the optimum up (336 $\to$ 1440 and 720 $\to$ 1440, i.e.\ ${\times}4.3$ and ${\times}2.0$); the \texttt{per\_er2500} curve is still flat between 720 and 1440, so its shift includes grid quantization.}
+\label{tab:p_axis}
+\centering\small
+\begin{tabular}{lcccccc cc}
+\toprule
+Dataset & 96 & 192 & 336 & 720 & 1440 & 2880 & $W^*$ & Pure-drift $W^*$ \\
+\midrule
+per\_er150 & 0.5519 & 0.5439 & 0.5435 & 0.5421 & \textbf{0.5419} & 0.5439 & 1440 & 336 \\
+per\_er2500 & 0.6335 & 0.6217 & 0.6178 & 0.6142 & \textbf{0.6131} & 0.6167 & 1440 & 720 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Densified-grid hardening (v2).}
+Doubling the drift tiers to ten and refining the lookback grid to nine points leaves the iTransformer exponent intact (grid argmin slope $-0.292$, interpolated $-0.317$; bootstrap 95\% CIs $[-0.472,-0.109]$ and $[-0.490,-0.175]$ contain $-\tfrac13$ and exclude $-\tfrac23$). The exponent does not transfer to DLinear, whose optimal span stays short (96--480) with no monotone $\lambda$ dependence and both estimator intervals containing zero, so the law is scoped to the instance-normalized attention family. The denser grid also exposes a mid-drift plateau ($W^*$ moves 482$\to$550 over a 4.3x $\lambda$ band), lowering log-log linearity ($R^2$ 0.64--0.76): the power law is a coarse first description of the harm axis. Full tables and figures are released in the accompanying repository.

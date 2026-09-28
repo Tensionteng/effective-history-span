@@ -1,0 +1,83 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_ETTh2_iTransformer_720_s2022Model:              iTransformer        
+
+[1mData Loader[0m
+  Data:               ETTh2               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh2.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            720                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            128                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               128                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: iTransformer ...
+>>>>>>>start training : long_term_forecast_LBv2_ETTh2_iTransformer_720_s2022_iTransformer_ETTh2_ftM_sl720_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 5665/7825 windows (max_train_windows=5665)
+train 5665
+val 2785
+test 2785
+	iters: 100, epoch: 1 | loss: 0.8745184
+	speed: 0.0302s/iter; left time: 50.8163s
+Epoch: 1 cost time: 3.0357370376586914
+Epoch: 1, Steps: 178 | Train Loss: 0.5537452 Vali Loss: 0.2585264 Test Loss: 0.3048656
+Validation loss decreased (inf --> 0.258526).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.3965957
+	speed: 0.0506s/iter; left time: 76.0406s
+Epoch: 2 cost time: 2.489103078842163
+Epoch: 2, Steps: 178 | Train Loss: 0.4398589 Vali Loss: 0.2417159 Test Loss: 0.2981514
+Validation loss decreased (0.258526 --> 0.241716).  Saving model ...
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.3688575
+	speed: 0.0464s/iter; left time: 61.4892s
+Epoch: 3 cost time: 2.35331392288208
+Epoch: 3, Steps: 178 | Train Loss: 0.3973283 Vali Loss: 0.2479167 Test Loss: 0.3028149
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.2919536
+	speed: 0.0512s/iter; left time: 58.7207s
+Epoch: 4 cost time: 2.5585744380950928
+Epoch: 4, Steps: 178 | Train Loss: 0.3766181 Vali Loss: 0.2454074 Test Loss: 0.3031353
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.25e-05
+	iters: 100, epoch: 5 | loss: 0.3871878
+	speed: 0.0469s/iter; left time: 45.4928s
+Epoch: 5 cost time: 2.416750907897949
+Epoch: 5, Steps: 178 | Train Loss: 0.3718398 Vali Loss: 0.2503767 Test Loss: 0.3047781
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBv2_ETTh2_iTransformer_720_s2022_iTransformer_ETTh2_ftM_sl720_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2785
+test shape: (2785, 96, 7) (2785, 96, 7)
+test shape: (2785, 96, 7) (2785, 96, 7)
+mse:0.30018436908721924, mae:0.35925865173339844, dtw:Not calculated

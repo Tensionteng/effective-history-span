@@ -1,0 +1,93 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           PLv2_iTransformer_drift_er400_sl480_s2021Model:              iTransformer        
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/power_law/
+  Data Path:          drift_er400.csv     Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            480                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             4                   Dec In:             4                   
+  C Out:              4                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               64                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       5                   Batch Size:         64                  
+  Patience:           3                   Learning Rate:      0.001               
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: iTransformer ...
+>>>>>>>start training : long_term_forecast_PLv2_iTransformer_drift_er400_sl480_s2021_iTransformer_custom_ftM_sl480_ll48_pl96_dm64_nh8_el2_dl1_df64_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 14525/16925 windows (max_train_windows=14525)
+train 14525
+val 2405
+test 4905
+	iters: 100, epoch: 1 | loss: 0.8989205
+	speed: 0.0265s/iter; left time: 27.5010s
+	iters: 200, epoch: 1 | loss: 0.9057670
+	speed: 0.0084s/iter; left time: 7.8755s
+Epoch: 1 cost time: 2.416168212890625
+Epoch: 1, Steps: 227 | Train Loss: 0.9148658 Vali Loss: 0.8852093 Test Loss: 0.8908602
+Validation loss decreased (inf --> 0.885209).  Saving model ...
+Updating learning rate to 0.001
+	iters: 100, epoch: 2 | loss: 0.8862206
+	speed: 0.0194s/iter; left time: 15.6712s
+	iters: 200, epoch: 2 | loss: 0.9055170
+	speed: 0.0087s/iter; left time: 6.1812s
+Epoch: 2 cost time: 2.0534019470214844
+Epoch: 2, Steps: 227 | Train Loss: 0.8937636 Vali Loss: 0.8831421 Test Loss: 0.8896204
+Validation loss decreased (0.885209 --> 0.883142).  Saving model ...
+Updating learning rate to 0.0005
+	iters: 100, epoch: 3 | loss: 0.9045474
+	speed: 0.0193s/iter; left time: 11.2342s
+	iters: 200, epoch: 3 | loss: 0.8831837
+	speed: 0.0083s/iter; left time: 3.9955s
+Epoch: 3 cost time: 1.9692118167877197
+Epoch: 3, Steps: 227 | Train Loss: 0.8903903 Vali Loss: 0.8822478 Test Loss: 0.8891535
+Validation loss decreased (0.883142 --> 0.882248).  Saving model ...
+Updating learning rate to 0.00025
+	iters: 100, epoch: 4 | loss: 0.8878274
+	speed: 0.0187s/iter; left time: 6.6312s
+	iters: 200, epoch: 4 | loss: 0.8998046
+	speed: 0.0082s/iter; left time: 2.0941s
+Epoch: 4 cost time: 1.9465808868408203
+Epoch: 4, Steps: 227 | Train Loss: 0.8890715 Vali Loss: 0.8818124 Test Loss: 0.8885697
+Validation loss decreased (0.882248 --> 0.881812).  Saving model ...
+Updating learning rate to 0.000125
+	iters: 100, epoch: 5 | loss: 0.8933829
+	speed: 0.0186s/iter; left time: 2.3767s
+	iters: 200, epoch: 5 | loss: 0.8949234
+	speed: 0.0080s/iter; left time: 0.2246s
+Epoch: 5 cost time: 1.9068562984466553
+Epoch: 5, Steps: 227 | Train Loss: 0.8883643 Vali Loss: 0.8821511 Test Loss: 0.8888544
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 6.25e-05
+>>>>>>>testing : long_term_forecast_PLv2_iTransformer_drift_er400_sl480_s2021_iTransformer_custom_ftM_sl480_ll48_pl96_dm64_nh8_el2_dl1_df64_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 4905
+test shape: (4905, 96, 4) (4905, 96, 4)
+test shape: (4905, 96, 4) (4905, 96, 4)
+mse:0.8886268138885498, mae:0.7512231469154358, dtw:Not calculated

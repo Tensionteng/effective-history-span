@@ -1,0 +1,44 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          zero_shot_forecast  Is Training:        0                   
+  Model ID:           LBtsfm_exchange_rate_96Model:              Chronos             
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/exchange_rate/
+  Data Path:          exchange_rate.csv   Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             8                   Dec In:             8                   
+  C Out:              8                   d model:            512                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               2048                
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       10                  Batch Size:         64                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: Chronos ...
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights:  22%|██▏       | 58/269 [00:00<00:00, 438.27it/s]Loading weights:  38%|███▊      | 102/269 [00:00<00:00, 210.96it/s]Loading weights:  48%|████▊     | 129/269 [00:00<00:00, 223.43it/s]Loading weights:  58%|█████▊    | 156/269 [00:00<00:00, 224.16it/s]Loading weights:  69%|██████▉   | 186/269 [00:00<00:00, 240.78it/s]Loading weights:  79%|███████▉  | 213/269 [00:00<00:00, 242.09it/s]Loading weights:  89%|████████▉ | 239/269 [00:00<00:00, 244.19it/s]Loading weights:  99%|█████████▊| 265/269 [00:01<00:00, 228.37it/s]Loading weights: 100%|██████████| 269/269 [00:01<00:00, 240.61it/s]
+>>>>>>>testing : zero_shot_forecast_LBtsfm_exchange_rate_96_Chronos_custom_ftM_sl96_ll48_pl96_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 1422
+test shape: (1422, 96, 8) (1422, 96, 8)
+test shape: (1422, 96, 8) (1422, 96, 8)
+mse:0.09005562961101532, mae:0.20584234595298767, dtw:Not calculated

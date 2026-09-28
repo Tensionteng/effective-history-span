@@ -1,0 +1,76 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_ETTh2_TimesNet_2880_s2021Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               ETTh2               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh2.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            2880                Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            32                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               32                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: TimesNet ...
+>>>>>>>start training : long_term_forecast_LBv2_ETTh2_TimesNet_2880_s2021_TimesNet_ETTh2_ftM_sl2880_ll48_pl96_dm32_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 5665
+val 2785
+test 2785
+	iters: 100, epoch: 1 | loss: 0.6755399
+	speed: 0.4327s/iter; left time: 727.3975s
+Epoch: 1 cost time: 72.838534116745
+Epoch: 1, Steps: 178 | Train Loss: 0.6703773 Vali Loss: 1.2365207 Test Loss: 0.7924954
+Validation loss decreased (inf --> 1.236521).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.4713205
+	speed: 0.9436s/iter; left time: 1418.1971s
+Epoch: 2 cost time: 68.51816701889038
+Epoch: 2, Steps: 178 | Train Loss: 0.4135683 Vali Loss: 1.7702581 Test Loss: 1.4575094
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.2421794
+	speed: 0.9762s/iter; left time: 1293.4489s
+Epoch: 3 cost time: 72.81776404380798
+Epoch: 3, Steps: 178 | Train Loss: 0.3417018 Vali Loss: 2.0572372 Test Loss: 1.7387324
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.2851770
+	speed: 0.9939s/iter; left time: 1140.0487s
+Epoch: 4 cost time: 72.79622459411621
+Epoch: 4, Steps: 178 | Train Loss: 0.3139885 Vali Loss: 2.1979545 Test Loss: 1.7923969
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBv2_ETTh2_TimesNet_2880_s2021_TimesNet_ETTh2_ftM_sl2880_ll48_pl96_dm32_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2785
+test shape: (2785, 96, 7) (2785, 96, 7)
+test shape: (2785, 96, 7) (2785, 96, 7)
+mse:0.7902712821960449, mae:0.6329832077026367, dtw:Not calculated

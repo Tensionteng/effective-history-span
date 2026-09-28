@@ -1,0 +1,97 @@
+\section{Measurement Protocol}
+\label{app:protocol}
+
+This appendix specifies the equal-data-budget protocol of Section \ref{sec:measure}: every dataset's training split is capped to the window count available under the longest lookback, and windows are sampled at a fixed stride so that all lookback settings train on exactly the same number of windows. The implementation, sampler, and all launch configurations are released in the accompanying code repository.
+
+\subsection{Equal-data-budget subsampling}
+
+A series whose train split contains $T$ timestamps yields
+\begin{equation}
+N(T, L, H) \;=\; T - L - H + 1
+\end{equation}
+overlapping training windows at lookback $L$ and horizon $H$ (we use $H{=}96$ throughout the main matrix). Since $N$ shrinks as $L$ grows, a naive lookback sweep confounds window content with data quantity: the longest lookback trains on the fewest windows. We therefore cap every run of a dataset at the window count of its longest-lookback run,
+\begin{equation}
+N\_{\min} \;=\; N(T, L\_{\max}, H), \qquad L\_{\max} = 2880,
+\end{equation}
+and subsample the window \emph{start indices} of every shorter-lookback run down to exactly $N\_{\min}$. Subsampling picks $N\_{\min}$ equally spaced start indices over the full train split via \texttt{np.linspace(0, N-1, N\_min)} followed by rounding and deduplication; it is fully deterministic (no RNG is involved), applies to the train split only, and leaves the validation and test splits untouched. Each run prints \texttt{train window subsample: keep K/N windows}, which we verify against Table \ref{tab:nmin}. When an run's available windows already fit under the cap (e.g.\ exchange rate at $L{=}2880$, where $N = N\_{\min} = 2336$), the sampler is a no-op and the run is identical to an uncapped run. All reported numbers are test MSE/MAE under the standard TSLib evaluation (identity test loader over all test windows).
+
+\subsection{Train-split sizes and \texorpdfstring{$N\_{\min}$}{N min}}
+
+\begin{table}[h]
+\caption{Train-split size $T$ (rows), the window-count formula evaluated at $L{=}2880$, $H{=}96$, and the resulting per-run training-window budget $N\_{\min}$ used by every lookback run of the main matrix. ETT borders are fixed calendar splits ($12{\times}30{\times}24$ hours; $4{\times}$ for 15-minute ETTm); the other datasets use the standard TSLib 70/10/20 chronological split. The saturation probe recomputes the budget at $L{=}5760$: $N\_{\min}^{(\mathrm{sat})} = 12557$ (electricity) and $6425$ (traffic).}
+\label{tab:nmin}
+\centering\small
+\begin{tabular}{lcccr}
+\toprule
+Dataset & Sampling & $T$ (train rows) & Channels & $N\_{\min}$ \\
+\midrule
+ETTh1, ETTh2 & hourly & 8640 & 7 & 5665 \\
+ETTm1, ETTm2 & 15-min & 34560 & 7 & 31585 \\
+Exchange & daily & 5311 & 8 & 2336 \\
+Weather & 10-min & 36887 & 21 & 33912 \\
+Electricity & hourly & 18412 & 321 & 15437 \\
+Traffic & hourly & 12280 & 862 & 9305 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Training protocol and hyperparameters}
+
+All runs share: \texttt{features=M} (multivariate), \texttt{label\_len=48}, \texttt{pred\_len=96}, \texttt{d\_layers=1}, \texttt{factor=3}, Adam optimizer with MSE loss, at most 10 epochs with early stopping (patience 3) on the validation loss, and seeds $\{2021, 2022, 2023\}$. iTransformer and DLinear share one family configuration per dataset (Table \ref{tab:hp_family}); PatchTST and TimesNet use the key hyperparameters of the official TSLib scripts per dataset (Tables \ref{tab:hp_patchtst} and \ref{tab:hp_timesnet}), with the learning rate kept at the official default $10^{-4}$ and TimesNet \texttt{top\_k=5}. These configurations are emitted verbatim by \texttt{gen\_cmds.py} into \texttt{main\_cmds.txt} (480 runs), \texttt{sat\_cmds.txt} (72 saturation runs), and \texttt{remaining\_cmds.txt} (re-run commands for missing runs, with \texttt{OMP\_NUM\_THREADS=2} pinning).
+
+\begin{table}[t]
+\caption{Per-dataset configuration shared by iTransformer and DLinear (all with \texttt{n\_heads=8}).}
+\label{tab:hp_family}
+\centering\small
+\begin{tabular}{lccccc}
+\toprule
+Dataset & $d\_{\mathrm{model}}$ & $d\_{\mathrm{ff}}$ & $e\_{\mathrm{layers}}$ & LR & Batch size \\
+\midrule
+ETTh1, ETTh2, ETTm1, ETTm2 & 128 & 128 & 2 & $10^{-4}$ & 32 \\
+Exchange & 128 & 128 & 2 & $10^{-4}$ & 32 \\
+Weather & 512 & 512 & 3 & $10^{-4}$ & 32 \\
+Electricity & 512 & 512 & 3 & $5{\times}10^{-4}$ & 16 \\
+Traffic & 512 & 512 & 3 & $5{\times}10^{-4}$ & 16 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{PatchTST per-dataset configuration (official TSLib settings; LR $=10^{-4}$ for all).}
+\label{tab:hp_patchtst}
+\centering\small
+\begin{tabular}{lccccc}
+\toprule
+Dataset & $d\_{\mathrm{model}}$ & $d\_{\mathrm{ff}}$ & $e\_{\mathrm{layers}}$ & Heads & Batch size \\
+\midrule
+ETTh1 & 512 & 2048 & 1 & 2 & 32 \\
+ETTh2 & 512 & 2048 & 3 & 4 & 32 \\
+ETTm1 & 512 & 2048 & 1 & 2 & 32 \\
+ETTm2 & 512 & 2048 & 3 & 16 & 32 \\
+Exchange & 512 & 2048 & 2 & 8 & 32 \\
+Weather & 512 & 2048 & 2 & 4 & 32 \\
+Electricity & 512 & 2048 & 2 & 8 & 16 \\
+Traffic & 512 & 512 & 2 & 8 & 4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{TimesNet per-dataset configuration (official TSLib settings; LR $=10^{-4}$, \texttt{top\_k=5} for all).}
+\label{tab:hp_timesnet}
+\centering\small
+\begin{tabular}{lccccc}
+\toprule
+Dataset & $d\_{\mathrm{model}}$ & $d\_{\mathrm{ff}}$ & $e\_{\mathrm{layers}}$ & Heads & Batch size \\
+\midrule
+ETTh1 & 16 & 32 & 2 & 8 & 32 \\
+ETTh2 & 32 & 32 & 2 & 8 & 32 \\
+ETTm1 & 64 & 64 & 2 & 8 & 32 \\
+ETTm2 & 32 & 32 & 2 & 8 & 32 \\
+Exchange & 64 & 64 & 2 & 8 & 32 \\
+Weather & 32 & 32 & 2 & 8 & 32 \\
+Electricity & 256 & 512 & 2 & 8 & 32 \\
+Traffic & 512 & 512 & 2 & 8 & 32 \\
+\bottomrule
+\end{tabular}
+\end{table}

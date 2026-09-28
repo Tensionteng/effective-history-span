@@ -1,0 +1,116 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           DEC_ETTh1_iTransformer_mu0p995_sl2880_s2022Model:              iTransformer        
+
+[1mData Loader[0m
+  Data:               ETTh1               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh1.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            2880                Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            128                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               128                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: iTransformer ...
+>>>>>>>start training : long_term_forecast_DEC_ETTh1_iTransformer_mu0p995_sl2880_s2022_iTransformer_ETTh1_ftM_sl2880_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+input decay: exp forgetting mu=0.995000 (equivalent window N*=199)
+train 5665
+input decay: exp forgetting mu=0.995000 (equivalent window N*=199)
+val 2785
+input decay: exp forgetting mu=0.995000 (equivalent window N*=199)
+test 2785
+	iters: 100, epoch: 1 | loss: 0.6024560
+	speed: 0.0286s/iter; left time: 47.9978s
+Epoch: 1 cost time: 2.291081666946411
+Epoch: 1, Steps: 178 | Train Loss: 0.6685488 Vali Loss: 0.9920173 Test Loss: 0.6670208
+Validation loss decreased (inf --> 0.992017).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.4631062
+	speed: 0.0404s/iter; left time: 60.7596s
+Epoch: 2 cost time: 3.0174806118011475
+Epoch: 2, Steps: 178 | Train Loss: 0.4993686 Vali Loss: 0.8724019 Test Loss: 0.5445162
+Validation loss decreased (0.992017 --> 0.872402).  Saving model ...
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.4008848
+	speed: 0.0544s/iter; left time: 72.1329s
+Epoch: 3 cost time: 3.0286781787872314
+Epoch: 3, Steps: 178 | Train Loss: 0.4301614 Vali Loss: 0.8193124 Test Loss: 0.5059876
+Validation loss decreased (0.872402 --> 0.819312).  Saving model ...
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.4068652
+	speed: 0.0533s/iter; left time: 61.1620s
+Epoch: 4 cost time: 3.099501609802246
+Epoch: 4, Steps: 178 | Train Loss: 0.4041622 Vali Loss: 0.8123220 Test Loss: 0.4919425
+Validation loss decreased (0.819312 --> 0.812322).  Saving model ...
+Updating learning rate to 1.25e-05
+	iters: 100, epoch: 5 | loss: 0.3836325
+	speed: 0.0538s/iter; left time: 52.1693s
+Epoch: 5 cost time: 2.9420487880706787
+Epoch: 5, Steps: 178 | Train Loss: 0.3923756 Vali Loss: 0.8174577 Test Loss: 0.4833490
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 6.25e-06
+	iters: 100, epoch: 6 | loss: 0.3624621
+	speed: 0.0519s/iter; left time: 41.0377s
+Epoch: 6 cost time: 2.9105019569396973
+Epoch: 6, Steps: 178 | Train Loss: 0.3873066 Vali Loss: 0.8041562 Test Loss: 0.4816832
+Validation loss decreased (0.812322 --> 0.804156).  Saving model ...
+Updating learning rate to 3.125e-06
+	iters: 100, epoch: 7 | loss: 0.3802400
+	speed: 0.0498s/iter; left time: 30.5400s
+Epoch: 7 cost time: 2.9994311332702637
+Epoch: 7, Steps: 178 | Train Loss: 0.3865358 Vali Loss: 0.8056229 Test Loss: 0.4796211
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 1.5625e-06
+	iters: 100, epoch: 8 | loss: 0.3617191
+	speed: 0.0517s/iter; left time: 22.4931s
+Epoch: 8 cost time: 3.0741188526153564
+Epoch: 8, Steps: 178 | Train Loss: 0.3840920 Vali Loss: 0.8000043 Test Loss: 0.4791488
+Validation loss decreased (0.804156 --> 0.800004).  Saving model ...
+Updating learning rate to 7.8125e-07
+	iters: 100, epoch: 9 | loss: 0.3601001
+	speed: 0.0510s/iter; left time: 13.1140s
+Epoch: 9 cost time: 2.9291441440582275
+Epoch: 9, Steps: 178 | Train Loss: 0.3831848 Vali Loss: 0.7973838 Test Loss: 0.4790029
+Validation loss decreased (0.800004 --> 0.797384).  Saving model ...
+Updating learning rate to 3.90625e-07
+	iters: 100, epoch: 10 | loss: 0.3631840
+	speed: 0.0516s/iter; left time: 4.0774s
+Epoch: 10 cost time: 2.897970199584961
+Epoch: 10, Steps: 178 | Train Loss: 0.3819142 Vali Loss: 0.8021552 Test Loss: 0.4786590
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 1.953125e-07
+>>>>>>>testing : long_term_forecast_DEC_ETTh1_iTransformer_mu0p995_sl2880_s2022_iTransformer_ETTh1_ftM_sl2880_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+input decay: exp forgetting mu=0.995000 (equivalent window N*=199)
+test 2785
+test shape: (2785, 96, 7) (2785, 96, 7)
+test shape: (2785, 96, 7) (2785, 96, 7)
+mse:0.4791164994239807, mae:0.476839542388916, dtw:Not calculated

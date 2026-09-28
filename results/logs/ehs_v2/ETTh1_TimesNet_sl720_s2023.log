@@ -1,0 +1,77 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_ETTh1_TimesNet_720_s2023Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               ETTh1               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh1.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            720                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            16                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               32                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: TimesNet ...
+>>>>>>>start training : long_term_forecast_LBv2_ETTh1_TimesNet_720_s2023_TimesNet_ETTh1_ftM_sl720_ll48_pl96_dm16_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 5665/7825 windows (max_train_windows=5665)
+train 5665
+val 2785
+test 2785
+	iters: 100, epoch: 1 | loss: 0.3476909
+	speed: 0.0639s/iter; left time: 107.4166s
+Epoch: 1 cost time: 8.682618618011475
+Epoch: 1, Steps: 178 | Train Loss: 0.4878161 Vali Loss: 0.9812103 Test Loss: 0.4490646
+Validation loss decreased (inf --> 0.981210).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.4265230
+	speed: 0.1047s/iter; left time: 157.3703s
+Epoch: 2 cost time: 7.566126108169556
+Epoch: 2, Steps: 178 | Train Loss: 0.3529401 Vali Loss: 1.0330000 Test Loss: 0.4310571
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.3068730
+	speed: 0.1024s/iter; left time: 135.6756s
+Epoch: 3 cost time: 7.498685121536255
+Epoch: 3, Steps: 178 | Train Loss: 0.3276751 Vali Loss: 1.0783225 Test Loss: 0.4326542
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.2790280
+	speed: 0.1024s/iter; left time: 117.4878s
+Epoch: 4 cost time: 7.510990142822266
+Epoch: 4, Steps: 178 | Train Loss: 0.3177947 Vali Loss: 1.0835420 Test Loss: 0.4352170
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBv2_ETTh1_TimesNet_720_s2023_TimesNet_ETTh1_ftM_sl720_ll48_pl96_dm16_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2785
+test shape: (2785, 96, 7) (2785, 96, 7)
+test shape: (2785, 96, 7) (2785, 96, 7)
+mse:0.4477843642234802, mae:0.4609892666339874, dtw:Not calculated

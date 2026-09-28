@@ -1,0 +1,72 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBsat_traffic_iTransformer_336_s2022Model:              iTransformer        
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/traffic/  
+  Data Path:          traffic.csv         Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            336                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             862                 Dec In:             862                 
+  C Out:              862                 d model:            512                 
+  n heads:            8                   e layers:           3                   
+  d layers:           1                   d FF:               512                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       10                  Batch Size:         16                  
+  Patience:           3                   Learning Rate:      0.0005              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: iTransformer ...
+>>>>>>>start training : long_term_forecast_LBsat_traffic_iTransformer_336_s2022_iTransformer_custom_ftM_sl336_ll48_pl96_dm512_nh8_el3_dl1_df512_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 6425/11849 windows (max_train_windows=6425)
+train 6425
+val 1661
+test 3413
+	iters: 100, epoch: 1 | loss: 0.3052450
+	speed: 0.4696s/iter; left time: 1841.2247s
+	iters: 200, epoch: 1 | loss: 0.2625225
+	speed: 0.3775s/iter; left time: 1442.4867s
+	iters: 300, epoch: 1 | loss: 0.2599784
+	speed: 0.3610s/iter; left time: 1343.3027s
+	iters: 400, epoch: 1 | loss: 0.2595062
+	speed: 0.3510s/iter; left time: 1270.9163s
+Epoch: 1 cost time: 149.35527777671814
+Epoch: 1, Steps: 402 | Train Loss: 0.2965191 Vali Loss: 0.3508744 Test Loss: 0.4158877
+Validation loss decreased (inf --> 0.350874).  Saving model ...
+Updating learning rate to 0.0005
+	iters: 100, epoch: 2 | loss: 0.2949094
+	speed: 3.3910s/iter; left time: 11932.9393s
+	iters: 200, epoch: 2 | loss: 0.2540827
+	speed: 0.3708s/iter; left time: 1267.7513s
+	iters: 300, epoch: 2 | loss: 0.2519739
+	speed: 0.3729s/iter; left time: 1237.7078s
+	iters: 400, epoch: 2 | loss: 0.2422439
+	speed: 0.3410s/iter; left time: 1097.7657s
+Epoch: 2 cost time: 146.56187391281128
+Epoch: 2, Steps: 402 | Train Loss: 0.2554835 Vali Loss: 0.3446790 Test Loss: 0.4027985
+Validation loss decreased (0.350874 --> 0.344679).  Saving model ...
+Updating learning rate to 0.00025

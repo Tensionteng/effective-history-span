@@ -1,0 +1,69 @@
+collected arms: {'itransformer': 180, 'dlinear': 180} (expect 180 each)
+
+=== itransformer ===
+MSE by lookback (2-seed mean):
+| dataset | 96 | 192 | 336 | 480 | 720 | 960 | 1440 | 2000 | 2880 | W* | W*_cont |
+| drift_er50 | 0.4794 | 0.4785 | 0.4783 | 0.4783 | 0.4798 | 0.4801 | 0.4823 | 0.4827 | 0.4901 | 336 | 345 |
+| drift_er150 | 0.7702 | 0.7650 | 0.7644 | 0.7648 | 0.7663 | 0.7667 | 0.7665 | 0.7682 | 0.7742 | 336 | 320 |
+| drift_er250 | 0.8490 | 0.8432 | 0.8428 | 0.8428 | 0.8427 | 0.8436 | 0.8453 | 0.8451 | 0.8468 | 720 | 609 |
+| drift_er400 | 0.8978 | 0.8907 | 0.8889 | 0.8886 | 0.8890 | 0.8906 | 0.8907 | 0.8910 | 0.8918 | 480 | 482 |
+| drift_er650 | 0.9827 | 0.9761 | 0.9751 | 0.9737 | 0.9746 | 0.9765 | 0.9768 | 0.9786 | 0.9850 | 480 | 513 |
+| drift_er1000 | 0.9898 | 0.9819 | 0.9800 | 0.9792 | 0.9794 | 0.9804 | 0.9828 | 0.9815 | 0.9821 | 480 | 548 |
+| drift_er1700 | 0.9749 | 0.9673 | 0.9653 | 0.9641 | 0.9644 | 0.9643 | 0.9648 | 0.9648 | 0.9651 | 480 | 550 |
+| drift_er2500 | 0.9951 | 0.9871 | 0.9849 | 0.9837 | 0.9832 | 0.9828 | 0.9836 | 0.9844 | 0.9847 | 960 | 965 |
+| drift_er4000 | 1.0067 | 0.9987 | 0.9962 | 0.9947 | 0.9942 | 0.9937 | 0.9939 | 0.9940 | 0.9944 | 960 | 1080 |
+| drift_er6000 | 1.0086 | 1.0004 | 0.9979 | 0.9966 | 0.9961 | 0.9959 | 0.9958 | 0.9955 | 0.9959 | 2000 | 1996 |
+grid-argmin fit: slope=-0.292 intercept=4.497 R2=0.637 (target -0.333±0.15) -> PASS
+interp-W* fit:   slope=-0.317 intercept=4.355 R2=0.756 -> PASS; W*_cont={50: 345, 150: 320, 250: 609, 400: 482, 650: 513, 1000: 548, 1700: 550, 2500: 965, 4000: 1080, 6000: 1996}
+  er=   50 lam=0.02000 W*=336 censored=False seed2021->336 seed2022->480
+  er=  150 lam=0.00667 W*=336 censored=False seed2021->336 seed2022->336
+  er=  250 lam=0.00400 W*=720 censored=False seed2021->720 seed2022->480
+  er=  400 lam=0.00250 W*=480 censored=False seed2021->480 seed2022->480
+  er=  650 lam=0.00154 W*=480 censored=False seed2021->480 seed2022->480
+  er= 1000 lam=0.00100 W*=480 censored=False seed2021->480 seed2022->480
+  er= 1700 lam=0.00059 W*=480 censored=False seed2021->960 seed2022->480
+  er= 2500 lam=0.00040 W*=960 censored=False seed2021->720 seed2022->960
+  er= 4000 lam=0.00025 W*=960 censored=False seed2021->960 seed2022->960
+  er= 6000 lam=0.00017 W*=2000 censored=False seed2021->2000 seed2022->2000
+
+=== dlinear ===
+MSE by lookback (2-seed mean):
+| dataset | 96 | 192 | 336 | 480 | 720 | 960 | 1440 | 2000 | 2880 | W* | W*_cont |
+| drift_er50 | 0.4821 | 0.4822 | 0.4827 | 0.4852 | 0.4873 | 0.4928 | 0.4972 | 0.5037 | 0.5149 | 96 | None |
+| drift_er150 | 0.7719 | 0.7676 | 0.7682 | 0.7698 | 0.7728 | 0.7773 | 0.7844 | 0.7917 | 0.8039 | 192 | 233 |
+| drift_er250 | 0.8555 | 0.8472 | 0.8475 | 0.8502 | 0.8538 | 0.8584 | 0.8672 | 0.8790 | 0.8966 | 192 | 246 |
+| drift_er400 | 0.9014 | 0.8939 | 0.8930 | 0.8950 | 0.8993 | 0.9053 | 0.9130 | 0.9221 | 0.9376 | 336 | 283 |
+| drift_er650 | 0.9969 | 0.9852 | 0.9839 | 0.9832 | 0.9871 | 0.9928 | 0.9996 | 1.0105 | 1.0286 | 480 | 427 |
+| drift_er1000 | 0.9874 | 0.9838 | 0.9834 | 0.9854 | 0.9884 | 0.9947 | 1.0020 | 1.0117 | 1.0289 | 336 | 268 |
+| drift_er1700 | 0.9738 | 0.9696 | 0.9692 | 0.9706 | 0.9732 | 0.9788 | 0.9868 | 0.9967 | 1.0126 | 336 | 272 |
+| drift_er2500 | 0.9886 | 0.9876 | 0.9876 | 0.9897 | 0.9923 | 0.9976 | 1.0054 | 1.0156 | 1.0316 | 192 | 248 |
+| drift_er4000 | 1.0072 | 1.0047 | 1.0036 | 1.0045 | 1.0066 | 1.0113 | 1.0184 | 1.0282 | 1.0439 | 336 | 312 |
+| drift_er6000 | 1.0003 | 1.0005 | 1.0013 | 1.0034 | 1.0064 | 1.0113 | 1.0193 | 1.0294 | 1.0450 | 96 | None |
+grid-argmin fit: slope=-0.073 intercept=4.950 R2=0.041 (target -0.333±0.15) -> FAIL
+interp-W* fit:   slope=-0.040 intercept=5.370 R2=0.058 -> FAIL; W*_cont={50: None, 150: 233, 250: 246, 400: 283, 650: 427, 1000: 268, 1700: 272, 2500: 248, 4000: 312, 6000: None}
+  er=   50 lam=0.02000 W*=96 censored=True seed2021->192 seed2022->96
+  er=  150 lam=0.00667 W*=192 censored=False seed2021->192 seed2022->192
+  er=  250 lam=0.00400 W*=192 censored=False seed2021->192 seed2022->192
+  er=  400 lam=0.00250 W*=336 censored=False seed2021->336 seed2022->336
+  er=  650 lam=0.00154 W*=480 censored=False seed2021->480 seed2022->480
+  er= 1000 lam=0.00100 W*=336 censored=False seed2021->336 seed2022->336
+  er= 1700 lam=0.00059 W*=336 censored=False seed2021->336 seed2022->336
+  er= 2500 lam=0.00040 W*=192 censored=False seed2021->336 seed2022->192
+  er= 4000 lam=0.00025 W*=336 censored=False seed2021->336 seed2022->336
+  er= 6000 lam=0.00017 W*=96 censored=True seed2021->96 seed2022->96
+
+itransformer bootstrap (B=10000, tiers x seeds resampled):
+  grid:   median=-0.289 95% CI [-0.472, -0.109]
+  interp: median=-0.323 95% CI [-0.490, -0.175] (skipped 0 censored replicates)
+  -1/3 inside grid CI: True; inside interp CI: True
+  -2/3 inside grid CI: False; inside interp CI: False
+
+dlinear bootstrap (B=10000, tiers x seeds resampled):
+  grid:   median=-0.061 95% CI [-0.338, 0.314]
+  interp: median=-0.056 95% CI [-0.176, 0.076] (skipped 8517 censored replicates)
+  -1/3 inside grid CI: True; inside interp CI: False
+  -2/3 inside grid CI: False; inside interp CI: False
+
+family slope difference (iTransformer - DLinear, grid): median=-0.229 95% CI [-0.769, 0.209]
+
+verdict.json + figs written to logs/power_law/v2/

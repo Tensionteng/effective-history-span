@@ -1,0 +1,44 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          zero_shot_forecast  Is Training:        0                   
+  Model ID:           LBtsfm_ETTh2_720    Model:              Chronos             
+
+[1mData Loader[0m
+  Data:               ETTh2               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh2.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            512                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               2048                
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       10                  Batch Size:         64                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: Chronos ...
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights:  16%|█▌        | 43/269 [00:00<00:00, 278.45it/s]Loading weights:  26%|██▋       | 71/269 [00:00<00:00, 240.26it/s]Loading weights:  39%|███▉      | 106/269 [00:00<00:00, 272.80it/s]Loading weights:  50%|████▉     | 134/269 [00:00<00:00, 269.14it/s]Loading weights:  60%|██████    | 162/269 [00:00<00:00, 245.70it/s]Loading weights:  70%|██████▉   | 187/269 [00:00<00:00, 239.97it/s]Loading weights:  79%|███████▉  | 212/269 [00:00<00:00, 241.86it/s]Loading weights:  88%|████████▊ | 237/269 [00:00<00:00, 239.33it/s]Loading weights: 100%|██████████| 269/269 [00:01<00:00, 255.17it/s]
+>>>>>>>testing : zero_shot_forecast_LBtsfm_ETTh2_720_Chronos_ETTh2_ftM_sl720_ll48_pl96_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2785
+test shape: (2785, 96, 7) (2785, 96, 7)
+test shape: (2785, 96, 7) (2785, 96, 7)
+mse:0.28645825386047363, mae:0.3308962881565094, dtw:Not calculated

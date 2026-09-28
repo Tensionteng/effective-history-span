@@ -1,0 +1,77 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           DEC_exchange_rate_PatchTSTGated_auto_sl2880_s2022Model:              PatchTSTGated       
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/exchange_rate/
+  Data Path:          exchange_rate.csv   Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            2880                Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             8                   Dec In:             8                   
+  C Out:              8                   d model:            512                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               2048                
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: PatchTSTGated ...
+>>>>>>>start training : long_term_forecast_DEC_exchange_rate_PatchTSTGated_auto_sl2880_s2022_PatchTSTGated_custom_ftM_sl2880_ll48_pl96_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+decay_auto: drift=0.8974 -> lambda=0.020000 -> N*=242 -> mu=0.995873
+input decay: exp forgetting mu=0.995873 (equivalent window N*=242)
+train 2336
+input decay: exp forgetting mu=0.995873 (equivalent window N*=242)
+val 665
+input decay: exp forgetting mu=0.995873 (equivalent window N*=242)
+test 1422
+Epoch: 1 cost time: 25.60141897201538
+Epoch: 1, Steps: 73 | Train Loss: 0.4144745 Vali Loss: 0.7463097 Test Loss: 0.3694772
+Validation loss decreased (inf --> 0.746310).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2 cost time: 25.038188695907593
+Epoch: 2, Steps: 73 | Train Loss: 0.2072541 Vali Loss: 0.1759122 Test Loss: 0.1224127
+Validation loss decreased (0.746310 --> 0.175912).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3 cost time: 25.139973163604736
+Epoch: 3, Steps: 73 | Train Loss: 0.1950645 Vali Loss: 0.3178831 Test Loss: 0.1642997
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 2.5e-05
+Epoch: 4 cost time: 25.162917852401733
+Epoch: 4, Steps: 73 | Train Loss: 0.1878110 Vali Loss: 0.4725349 Test Loss: 0.2877996
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.25e-05
+Epoch: 5 cost time: 18.133474826812744
+Epoch: 5, Steps: 73 | Train Loss: 0.1827379 Vali Loss: 0.3476916 Test Loss: 0.2092294
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_DEC_exchange_rate_PatchTSTGated_auto_sl2880_s2022_PatchTSTGated_custom_ftM_sl2880_ll48_pl96_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+input decay: exp forgetting mu=0.995873 (equivalent window N*=242)
+test 1422
+test shape: (1422, 96, 8) (1422, 96, 8)
+test shape: (1422, 96, 8) (1422, 96, 8)
+mse:0.1218157559633255, mae:0.25147244334220886, dtw:Not calculated

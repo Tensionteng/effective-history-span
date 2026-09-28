@@ -1,0 +1,92 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           E2H192_ETTh1_iTransformer_1440_s2022Model:              iTransformer        
+
+[1mData Loader[0m
+  Data:               ETTh1               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh1.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            1440                Label Len:          48                  
+  Pred Len:           192                 Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            128                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               128                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        4                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: iTransformer ...
+>>>>>>>start training : long_term_forecast_E2H192_ETTh1_iTransformer_1440_s2022_iTransformer_ETTh1_ftM_sl1440_ll48_pl192_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 7009
+val 2689
+test 2689
+	iters: 100, epoch: 1 | loss: 0.4908619
+	speed: 0.1284s/iter; left time: 269.6725s
+	iters: 200, epoch: 1 | loss: 0.4011975
+	speed: 0.0814s/iter; left time: 162.9479s
+Epoch: 1 cost time: 20.128472805023193
+Epoch: 1, Steps: 220 | Train Loss: 0.5501491 Vali Loss: 1.0427011 Test Loss: 0.4488661
+Validation loss decreased (inf --> 1.042701).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.3860864
+	speed: 0.3645s/iter; left time: 685.6546s
+	iters: 200, epoch: 2 | loss: 0.4396724
+	speed: 0.0799s/iter; left time: 142.2753s
+Epoch: 2 cost time: 18.058704614639282
+Epoch: 2, Steps: 220 | Train Loss: 0.4260229 Vali Loss: 0.9807994 Test Loss: 0.4401062
+Validation loss decreased (1.042701 --> 0.980799).  Saving model ...
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.4247149
+	speed: 0.3721s/iter; left time: 618.0912s
+	iters: 200, epoch: 3 | loss: 0.3433728
+	speed: 0.0911s/iter; left time: 142.2228s
+Epoch: 3 cost time: 20.384588718414307
+Epoch: 3, Steps: 220 | Train Loss: 0.4000647 Vali Loss: 0.9853848 Test Loss: 0.4591954
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.3824037
+	speed: 0.3855s/iter; left time: 555.4690s
+	iters: 200, epoch: 4 | loss: 0.3263116
+	speed: 0.0945s/iter; left time: 126.6904s
+Epoch: 4 cost time: 20.750137090682983
+Epoch: 4, Steps: 220 | Train Loss: 0.3903548 Vali Loss: 0.9830476 Test Loss: 0.4648922
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.25e-05
+	iters: 100, epoch: 5 | loss: 0.3749302
+	speed: 0.4279s/iter; left time: 522.4763s
+	iters: 200, epoch: 5 | loss: 0.4277120
+	speed: 0.0997s/iter; left time: 111.8045s
+Epoch: 5 cost time: 22.402934074401855
+Epoch: 5, Steps: 220 | Train Loss: 0.3837936 Vali Loss: 0.9963283 Test Loss: 0.4668982
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_E2H192_ETTh1_iTransformer_1440_s2022_iTransformer_ETTh1_ftM_sl1440_ll48_pl192_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2689
+test shape: (2689, 192, 7) (2689, 192, 7)
+test shape: (2689, 192, 7) (2689, 192, 7)
+mse:0.4392071068286896, mae:0.4556952714920044, dtw:Not calculated

@@ -1,0 +1,73 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_exchange_rate_DLinear_720_s2023Model:              DLinear             
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/exchange_rate/
+  Data Path:          exchange_rate.csv   Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            720                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             8                   Dec In:             8                   
+  C Out:              8                   d model:            128                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               128                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: DLinear ...
+>>>>>>>start training : long_term_forecast_LBv2_exchange_rate_DLinear_720_s2023_DLinear_custom_ftM_sl720_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 2336/4496 windows (max_train_windows=2336)
+train 2336
+val 665
+test 1422
+Epoch: 1 cost time: 0.4791450500488281
+Epoch: 1, Steps: 73 | Train Loss: 0.3233197 Vali Loss: 0.4215581 Test Loss: 0.2215434
+Validation loss decreased (inf --> 0.421558).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2 cost time: 0.28370141983032227
+Epoch: 2, Steps: 73 | Train Loss: 0.2090861 Vali Loss: 0.2962388 Test Loss: 0.1432147
+Validation loss decreased (0.421558 --> 0.296239).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3 cost time: 0.28302836418151855
+Epoch: 3, Steps: 73 | Train Loss: 0.1857720 Vali Loss: 0.3267741 Test Loss: 0.1599688
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 2.5e-05
+Epoch: 4 cost time: 0.29245924949645996
+Epoch: 4, Steps: 73 | Train Loss: 0.1778284 Vali Loss: 0.3028877 Test Loss: 0.1536148
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.25e-05
+Epoch: 5 cost time: 0.28674983978271484
+Epoch: 5, Steps: 73 | Train Loss: 0.1743102 Vali Loss: 0.3205270 Test Loss: 0.1643586
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBv2_exchange_rate_DLinear_720_s2023_DLinear_custom_ftM_sl720_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 1422
+test shape: (1422, 96, 8) (1422, 96, 8)
+test shape: (1422, 96, 8) (1422, 96, 8)
+mse:0.14329786598682404, mae:0.29257264733314514, dtw:Not calculated

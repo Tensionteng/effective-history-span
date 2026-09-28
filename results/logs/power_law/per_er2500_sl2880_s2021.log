@@ -1,0 +1,84 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           PL_per_er2500_sl2880_s2021Model:              iTransformer        
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/power_law/
+  Data Path:          per_er2500.csv      Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            2880                Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             4                   Dec In:             4                   
+  C Out:              4                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               64                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       5                   Batch Size:         64                  
+  Patience:           3                   Learning Rate:      0.001               
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: iTransformer ...
+>>>>>>>start training : long_term_forecast_PL_per_er2500_sl2880_s2021_iTransformer_custom_ftM_sl2880_ll48_pl96_dm64_nh8_el2_dl1_df64_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 14525
+val 2405
+test 4905
+	iters: 100, epoch: 1 | loss: 0.6359162
+	speed: 0.0288s/iter; left time: 29.8353s
+	iters: 200, epoch: 1 | loss: 0.6199034
+	speed: 0.0127s/iter; left time: 11.8620s
+Epoch: 1 cost time: 3.1627087593078613
+Epoch: 1, Steps: 227 | Train Loss: 0.6471150 Vali Loss: 0.6151582 Test Loss: 0.6177112
+Validation loss decreased (inf --> 0.615158).  Saving model ...
+Updating learning rate to 0.001
+	iters: 100, epoch: 2 | loss: 0.6161143
+	speed: 0.0309s/iter; left time: 25.0087s
+	iters: 200, epoch: 2 | loss: 0.6256181
+	speed: 0.0134s/iter; left time: 9.5304s
+Epoch: 2 cost time: 3.238469123840332
+Epoch: 2, Steps: 227 | Train Loss: 0.6229703 Vali Loss: 0.6153894 Test Loss: 0.6171930
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.0005
+	iters: 100, epoch: 3 | loss: 0.6138697
+	speed: 0.0320s/iter; left time: 18.6186s
+	iters: 200, epoch: 3 | loss: 0.6109105
+	speed: 0.0133s/iter; left time: 6.4035s
+Epoch: 3 cost time: 3.2382168769836426
+Epoch: 3, Steps: 227 | Train Loss: 0.6187653 Vali Loss: 0.6153906 Test Loss: 0.6159898
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 0.00025
+	iters: 100, epoch: 4 | loss: 0.6074554
+	speed: 0.0317s/iter; left time: 11.2611s
+	iters: 200, epoch: 4 | loss: 0.6137691
+	speed: 0.0138s/iter; left time: 3.5313s
+Epoch: 4 cost time: 3.343234062194824
+Epoch: 4, Steps: 227 | Train Loss: 0.6161936 Vali Loss: 0.6158504 Test Loss: 0.6158427
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_PL_per_er2500_sl2880_s2021_iTransformer_custom_ftM_sl2880_ll48_pl96_dm64_nh8_el2_dl1_df64_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 4905
+test shape: (4905, 96, 4) (4905, 96, 4)
+test shape: (4905, 96, 4) (4905, 96, 4)
+mse:0.6175913214683533, mae:0.6261785626411438, dtw:Not calculated

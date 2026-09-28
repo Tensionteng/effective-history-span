@@ -1,0 +1,85 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           PLv2_iTransformer_drift_er250_sl1440_s2021Model:              iTransformer        
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/power_law/
+  Data Path:          drift_er250.csv     Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            1440                Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             4                   Dec In:             4                   
+  C Out:              4                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               64                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       5                   Batch Size:         64                  
+  Patience:           3                   Learning Rate:      0.001               
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: iTransformer ...
+>>>>>>>start training : long_term_forecast_PLv2_iTransformer_drift_er250_sl1440_s2021_iTransformer_custom_ftM_sl1440_ll48_pl96_dm64_nh8_el2_dl1_df64_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 14525/15965 windows (max_train_windows=14525)
+train 14525
+val 2405
+test 4905
+	iters: 100, epoch: 1 | loss: 0.8631153
+	speed: 0.0246s/iter; left time: 25.4859s
+	iters: 200, epoch: 1 | loss: 0.8422257
+	speed: 0.0080s/iter; left time: 7.5304s
+Epoch: 1 cost time: 2.2728090286254883
+Epoch: 1, Steps: 227 | Train Loss: 0.8690011 Vali Loss: 0.8402447 Test Loss: 0.8450701
+Validation loss decreased (inf --> 0.840245).  Saving model ...
+Updating learning rate to 0.001
+	iters: 100, epoch: 2 | loss: 0.8482819
+	speed: 0.0180s/iter; left time: 14.5793s
+	iters: 200, epoch: 2 | loss: 0.8357729
+	speed: 0.0081s/iter; left time: 5.7402s
+Epoch: 2 cost time: 1.9291284084320068
+Epoch: 2, Steps: 227 | Train Loss: 0.8446786 Vali Loss: 0.8429610 Test Loss: 0.8451290
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.0005
+	iters: 100, epoch: 3 | loss: 0.8406563
+	speed: 0.0176s/iter; left time: 10.2305s
+	iters: 200, epoch: 3 | loss: 0.8369781
+	speed: 0.0081s/iter; left time: 3.9196s
+Epoch: 3 cost time: 1.9157514572143555
+Epoch: 3, Steps: 227 | Train Loss: 0.8387864 Vali Loss: 0.8429806 Test Loss: 0.8453832
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 0.00025
+	iters: 100, epoch: 4 | loss: 0.8524501
+	speed: 0.0183s/iter; left time: 6.4884s
+	iters: 200, epoch: 4 | loss: 0.8359779
+	speed: 0.0081s/iter; left time: 2.0582s
+Epoch: 4 cost time: 1.9728164672851562
+Epoch: 4, Steps: 227 | Train Loss: 0.8353364 Vali Loss: 0.8435158 Test Loss: 0.8452455
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_PLv2_iTransformer_drift_er250_sl1440_s2021_iTransformer_custom_ftM_sl1440_ll48_pl96_dm64_nh8_el2_dl1_df64_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 4905
+test shape: (4905, 96, 4) (4905, 96, 4)
+test shape: (4905, 96, 4) (4905, 96, 4)
+mse:0.844946026802063, mae:0.7310622334480286, dtw:Not calculated

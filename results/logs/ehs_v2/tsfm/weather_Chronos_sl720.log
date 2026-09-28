@@ -1,0 +1,44 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          zero_shot_forecast  Is Training:        0                   
+  Model ID:           LBtsfm_weather_720  Model:              Chronos             
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/weather/  
+  Data Path:          weather.csv         Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             21                  Dec In:             21                  
+  C Out:              21                  d model:            512                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               2048                
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       10                  Batch Size:         64                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: Chronos ...
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights:  17%|█▋        | 47/269 [00:00<00:00, 366.20it/s]Loading weights:  31%|███       | 84/269 [00:00<00:00, 348.66it/s]Loading weights:  44%|████▍     | 119/269 [00:00<00:00, 258.77it/s]Loading weights:  55%|█████▍    | 147/269 [00:00<00:00, 252.97it/s]Loading weights:  70%|███████   | 189/269 [00:00<00:00, 281.27it/s]Loading weights:  85%|████████▌ | 229/269 [00:00<00:00, 313.70it/s]Loading weights:  97%|█████████▋| 262/269 [00:00<00:00, 311.00it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 304.04it/s]
+>>>>>>>testing : zero_shot_forecast_LBtsfm_weather_720_Chronos_custom_ftM_sl720_ll48_pl96_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 10444
+test shape: (10444, 96, 21) (10444, 96, 21)
+test shape: (10444, 96, 21) (10444, 96, 21)
+mse:0.16912557184696198, mae:0.2095792293548584, dtw:Not calculated

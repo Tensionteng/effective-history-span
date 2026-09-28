@@ -1,0 +1,68 @@
+== Dataset statistics (mean over <=50 channels, max_len=12000, convention=train) ==
+ETTh1           periodicity_dt=+0.3128  drift=+0.5254  long_acf=+0.1837  calendar_acf_diff=+0.2960  long_acf_diff=+0.0676
+ETTh2           periodicity_dt=+0.2697  drift=+0.5983  long_acf=+0.0227  calendar_acf_diff=+0.2513  long_acf_diff=+0.0231
+ETTm1           periodicity_dt=+0.1808  drift=+0.5227  long_acf=+0.1218  calendar_acf_diff=+0.1058  long_acf_diff=-0.0047
+ETTm2           periodicity_dt=+0.1707  drift=+0.5416  long_acf=+0.1529  calendar_acf_diff=+0.1300  long_acf_diff=-0.0128
+exchange_rate   periodicity_dt=+0.4782  drift=+0.8974  long_acf=-0.2588  calendar_acf_diff=+0.0006  long_acf_diff=+0.0109
+weather         periodicity_dt=+0.1463  drift=+0.2754  long_acf=+0.0480  calendar_acf_diff=+0.0610  long_acf_diff=+0.0008
+electricity     periodicity_dt=+0.4767  drift=+0.1810  long_acf=+0.5395  calendar_acf_diff=+0.6831  long_acf_diff=+0.2900
+traffic         periodicity_dt=+0.4754  drift=+0.0270  long_acf=+0.6270  calendar_acf_diff=+0.5098  long_acf_diff=+0.2527
+target iTransformer ETTh1           best_sl=  720 benefit=-0.0576
+target iTransformer ETTh2           best_sl=   96 benefit=-0.1466
+target iTransformer ETTm1           best_sl=  336 benefit=+0.0010
+target iTransformer ETTm2           best_sl=  336 benefit=-0.0059
+target iTransformer exchange_rate   best_sl=   96 benefit=-0.2273
+target iTransformer weather         best_sl=  336 benefit=-0.0497
+target iTransformer electricity     best_sl= 2880 benefit=+0.0179
+target iTransformer traffic         best_sl= 2880 benefit=+0.0655
+target DLinear      ETTh1           best_sl= 1440 benefit=+0.0147
+target DLinear      ETTh2           best_sl=  720 benefit=-0.0958
+target DLinear      ETTm1           best_sl=  336 benefit=+0.0353
+target DLinear      ETTm2           best_sl= 2880 benefit=+0.0300
+target DLinear      exchange_rate   best_sl=   96 benefit=-0.5244
+target DLinear      weather         best_sl= 2880 benefit=+0.0288
+target DLinear      electricity     best_sl= 2880 benefit=+0.0657
+target DLinear      traffic         best_sl= 2880 benefit=+0.2720
+
+== Correlations with targets (n=16 = 8 datasets x 2 models) ==
+periodicity_dt     vs benefit: spearman=-0.101(p=0.711) pearson=-0.139 | vs log2(best_sl): spearman=-0.028(p=0.919) pearson=+0.119
+drift              vs benefit: spearman=-0.828(p=0.000) pearson=-0.798 | vs log2(best_sl): spearman=-0.725(p=0.001) pearson=-0.784
+long_acf           vs benefit: spearman=+0.793(p=0.000) pearson=+0.786 | vs log2(best_sl): spearman=+0.768(p=0.001) pearson=+0.786
+calendar_acf_diff  vs benefit: spearman=+0.550(p=0.027) pearson=+0.532 | vs log2(best_sl): spearman=+0.661(p=0.005) pearson=+0.656
+long_acf_diff      vs benefit: spearman=+0.243(p=0.365) pearson=+0.460 | vs log2(best_sl): spearman=+0.433(p=0.094) pearson=+0.624
+
+== Leave-one-dataset-out CV (ridge, features = top-k |spearman| inside fold) ==
+k=2: LOO spearman(pred,true log2 sl)=+0.621 (p=0.010), exact tier hit 9/16 (baseline const-median 2/16), direction acc 11/16
+    ETTh1           iTransformer true=  720 pred_tier=  720 (pred_log2=+9.12) feats=['drift', 'long_acf']
+    ETTh1           DLinear      true= 1440 pred_tier=  720 (pred_log2=+9.12) feats=['drift', 'long_acf']
+    ETTh2           iTransformer true=   96 pred_tier=  336 (pred_log2=+8.90) feats=['long_acf', 'calendar_acf_diff']
+    ETTh2           DLinear      true=  720 pred_tier=  336 (pred_log2=+8.90) feats=['long_acf', 'calendar_acf_diff']
+    ETTm1           iTransformer true=  336 pred_tier=  720 (pred_log2=+9.21) feats=['drift', 'long_acf']
+    ETTm1           DLinear      true=  336 pred_tier=  720 (pred_log2=+9.21) feats=['drift', 'long_acf']
+    ETTm2           iTransformer true=  336 pred_tier=  336 (pred_log2=+8.98) feats=['drift', 'long_acf']
+    ETTm2           DLinear      true= 2880 pred_tier=  336 (pred_log2=+8.98) feats=['drift', 'long_acf']
+    exchange_rate   iTransformer true=   96 pred_tier=   96 (pred_log2=+7.26) feats=['long_acf', 'drift']
+    exchange_rate   DLinear      true=   96 pred_tier=   96 (pred_log2=+7.26) feats=['long_acf', 'drift']
+    weather         iTransformer true=  336 pred_tier=  336 (pred_log2=+8.45) feats=['long_acf', 'calendar_acf_diff']
+    weather         DLinear      true= 2880 pred_tier=  336 (pred_log2=+8.45) feats=['long_acf', 'calendar_acf_diff']
+    electricity     iTransformer true= 2880 pred_tier= 2880 (pred_log2=+11.16) feats=['long_acf', 'drift']
+    electricity     DLinear      true= 2880 pred_tier= 2880 (pred_log2=+11.16) feats=['long_acf', 'drift']
+    traffic         iTransformer true= 2880 pred_tier= 2880 (pred_log2=+12.43) feats=['long_acf', 'drift']
+    traffic         DLinear      true= 2880 pred_tier= 2880 (pred_log2=+12.43) feats=['long_acf', 'drift']
+k=3: LOO spearman(pred,true log2 sl)=+0.569 (p=0.022), exact tier hit 7/16 (baseline const-median 2/16), direction acc 11/16
+    ETTh1           iTransformer true=  720 pred_tier=  720 (pred_log2=+9.13) feats=['drift', 'long_acf', 'calendar_acf_diff']
+    ETTh1           DLinear      true= 1440 pred_tier=  720 (pred_log2=+9.13) feats=['drift', 'long_acf', 'calendar_acf_diff']
+    ETTh2           iTransformer true=   96 pred_tier=  336 (pred_log2=+8.85) feats=['long_acf', 'calendar_acf_diff', 'drift']
+    ETTh2           DLinear      true=  720 pred_tier=  336 (pred_log2=+8.85) feats=['long_acf', 'calendar_acf_diff', 'drift']
+    ETTm1           iTransformer true=  336 pred_tier=  720 (pred_log2=+9.26) feats=['drift', 'long_acf', 'calendar_acf_diff']
+    ETTm1           DLinear      true=  336 pred_tier=  720 (pred_log2=+9.26) feats=['drift', 'long_acf', 'calendar_acf_diff']
+    ETTm2           iTransformer true=  336 pred_tier=  336 (pred_log2=+8.79) feats=['drift', 'long_acf', 'calendar_acf_diff']
+    ETTm2           DLinear      true= 2880 pred_tier=  336 (pred_log2=+8.79) feats=['drift', 'long_acf', 'calendar_acf_diff']
+    exchange_rate   iTransformer true=   96 pred_tier=   96 (pred_log2=+7.30) feats=['long_acf', 'drift', 'calendar_acf_diff']
+    exchange_rate   DLinear      true=   96 pred_tier=   96 (pred_log2=+7.30) feats=['long_acf', 'drift', 'calendar_acf_diff']
+    weather         iTransformer true=  336 pred_tier=  336 (pred_log2=+8.84) feats=['long_acf', 'calendar_acf_diff', 'drift']
+    weather         DLinear      true= 2880 pred_tier=  336 (pred_log2=+8.84) feats=['long_acf', 'calendar_acf_diff', 'drift']
+    electricity     iTransformer true= 2880 pred_tier= 1440 (pred_log2=+11.05) feats=['long_acf', 'drift', 'calendar_acf_diff']
+    electricity     DLinear      true= 2880 pred_tier= 1440 (pred_log2=+11.05) feats=['long_acf', 'drift', 'calendar_acf_diff']
+    traffic         iTransformer true= 2880 pred_tier= 2880 (pred_log2=+12.46) feats=['long_acf', 'drift', 'calendar_acf_diff']
+    traffic         DLinear      true= 2880 pred_tier= 2880 (pred_log2=+12.46) feats=['long_acf', 'drift', 'calendar_acf_diff']

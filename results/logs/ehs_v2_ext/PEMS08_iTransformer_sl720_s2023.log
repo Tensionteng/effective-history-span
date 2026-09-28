@@ -1,0 +1,123 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBext_PEMS08_iTransformer_720_s2023Model:              iTransformer        
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/PEMS08/   
+  Data Path:          PEMS08.csv          Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            720                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             170                 Dec In:             170                 
+  C Out:              170                 d model:            512                 
+  n heads:            8                   e layers:           3                   
+  d layers:           1                   d FF:               512                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        4                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         16                  
+  Patience:           3                   Learning Rate:      0.0005              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: iTransformer ...
+>>>>>>>start training : long_term_forecast_LBext_PEMS08_iTransformer_720_s2023_iTransformer_custom_ftM_sl720_ll48_pl96_dm512_nh8_el3_dl1_df512_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 9524/11684 windows (max_train_windows=9524)
+train 9524
+val 1691
+test 3476
+	iters: 100, epoch: 1 | loss: 0.5445219
+	speed: 0.0541s/iter; left time: 317.3627s
+	iters: 200, epoch: 1 | loss: 0.4860460
+	speed: 0.0294s/iter; left time: 169.4216s
+	iters: 300, epoch: 1 | loss: 0.5768266
+	speed: 0.0296s/iter; left time: 167.4261s
+	iters: 400, epoch: 1 | loss: 0.5398178
+	speed: 0.0293s/iter; left time: 162.7795s
+	iters: 500, epoch: 1 | loss: 0.5139426
+	speed: 0.0286s/iter; left time: 155.9382s
+Epoch: 1 cost time: 18.020117044448853
+Epoch: 1, Steps: 596 | Train Loss: 0.5758910 Vali Loss: 0.7120535 Test Loss: 0.7341469
+Validation loss decreased (inf --> 0.712053).  Saving model ...
+Updating learning rate to 0.0005
+	iters: 100, epoch: 2 | loss: 0.4814600
+	speed: 0.1358s/iter; left time: 714.8513s
+	iters: 200, epoch: 2 | loss: 0.4872753
+	speed: 0.0283s/iter; left time: 146.0898s
+	iters: 300, epoch: 2 | loss: 0.3975475
+	speed: 0.0278s/iter; left time: 140.9188s
+	iters: 400, epoch: 2 | loss: 0.4232721
+	speed: 0.0277s/iter; left time: 137.6465s
+	iters: 500, epoch: 2 | loss: 0.4491675
+	speed: 0.0293s/iter; left time: 142.7263s
+Epoch: 2 cost time: 17.51502799987793
+Epoch: 2, Steps: 596 | Train Loss: 0.4876231 Vali Loss: 0.7021710 Test Loss: 0.7230943
+Validation loss decreased (0.712053 --> 0.702171).  Saving model ...
+Updating learning rate to 0.00025
+	iters: 100, epoch: 3 | loss: 0.4758541
+	speed: 0.1533s/iter; left time: 715.7941s
+	iters: 200, epoch: 3 | loss: 0.3631357
+	speed: 0.0314s/iter; left time: 143.3695s
+	iters: 300, epoch: 3 | loss: 0.4260990
+	speed: 0.0328s/iter; left time: 146.6680s
+	iters: 400, epoch: 3 | loss: 0.3994115
+	speed: 0.0309s/iter; left time: 135.1775s
+	iters: 500, epoch: 3 | loss: 0.4751198
+	speed: 0.0320s/iter; left time: 136.7934s
+Epoch: 3 cost time: 19.12199854850769
+Epoch: 3, Steps: 596 | Train Loss: 0.4316843 Vali Loss: 0.7052023 Test Loss: 0.7169820
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.000125
+	iters: 100, epoch: 4 | loss: 0.4066396
+	speed: 0.1510s/iter; left time: 614.8244s
+	iters: 200, epoch: 4 | loss: 0.3811882
+	speed: 0.0321s/iter; left time: 127.3645s
+	iters: 300, epoch: 4 | loss: 0.4470243
+	speed: 0.0316s/iter; left time: 122.5362s
+	iters: 400, epoch: 4 | loss: 0.4211498
+	speed: 0.0313s/iter; left time: 117.9821s
+	iters: 500, epoch: 4 | loss: 0.3773684
+	speed: 0.0306s/iter; left time: 112.4929s
+Epoch: 4 cost time: 18.913126468658447
+Epoch: 4, Steps: 596 | Train Loss: 0.3963878 Vali Loss: 0.7197366 Test Loss: 0.7232758
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 6.25e-05
+	iters: 100, epoch: 5 | loss: 0.3593738
+	speed: 0.1552s/iter; left time: 539.7133s
+	iters: 200, epoch: 5 | loss: 0.3716095
+	speed: 0.0324s/iter; left time: 109.3845s
+	iters: 300, epoch: 5 | loss: 0.3849572
+	speed: 0.0330s/iter; left time: 108.0415s
+	iters: 400, epoch: 5 | loss: 0.3876129
+	speed: 0.0326s/iter; left time: 103.6108s
+	iters: 500, epoch: 5 | loss: 0.3313188
+	speed: 0.0333s/iter; left time: 102.3923s
+Epoch: 5 cost time: 19.721715211868286
+Epoch: 5, Steps: 596 | Train Loss: 0.3750248 Vali Loss: 0.7323549 Test Loss: 0.7328725
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBext_PEMS08_iTransformer_720_s2023_iTransformer_custom_ftM_sl720_ll48_pl96_dm512_nh8_el3_dl1_df512_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 3476
+test shape: (3476, 96, 170) (3476, 96, 170)
+test shape: (3476, 96, 170) (3476, 96, 170)
+mse:0.7228761911392212, mae:0.4246689975261688, dtw:Not calculated

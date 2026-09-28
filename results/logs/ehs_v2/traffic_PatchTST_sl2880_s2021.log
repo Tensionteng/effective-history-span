@@ -1,0 +1,121 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_traffic_PatchTST_2880_s2021Model:              PatchTST            
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/traffic/  
+  Data Path:          traffic.csv         Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            2880                Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             862                 Dec In:             862                 
+  C Out:              862                 d model:            512                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               512                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       10                  Batch Size:         2                   
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: PatchTST ...
+>>>>>>>start training : long_term_forecast_LBv2_traffic_PatchTST_2880_s2021_PatchTST_custom_ftM_sl2880_ll48_pl96_dm512_nh8_el2_dl1_df512_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 9305
+val 1661
+test 3413
+	iters: 100, epoch: 1 | loss: 0.8948645
+	speed: 1.1063s/iter; left time: 51366.8468s
+	iters: 200, epoch: 1 | loss: 0.7761182
+	speed: 1.0808s/iter; left time: 50072.7184s
+	iters: 300, epoch: 1 | loss: 0.7483366
+	speed: 1.0803s/iter; left time: 49943.7062s
+	iters: 400, epoch: 1 | loss: 0.6553878
+	speed: 1.0810s/iter; left time: 49866.9934s
+	iters: 500, epoch: 1 | loss: 0.6803151
+	speed: 1.0813s/iter; left time: 49775.3639s
+	iters: 600, epoch: 1 | loss: 0.7344132
+	speed: 1.0822s/iter; left time: 49706.0775s
+	iters: 700, epoch: 1 | loss: 0.5716143
+	speed: 1.0825s/iter; left time: 49611.7281s
+	iters: 800, epoch: 1 | loss: 0.6050091
+	speed: 1.0823s/iter; left time: 49494.8786s
+	iters: 900, epoch: 1 | loss: 0.5173926
+	speed: 1.0811s/iter; left time: 49331.8424s
+	iters: 1000, epoch: 1 | loss: 0.5589670
+	speed: 1.0822s/iter; left time: 49273.9903s
+	iters: 1100, epoch: 1 | loss: 0.5518086
+	speed: 1.0817s/iter; left time: 49142.5290s
+	iters: 1200, epoch: 1 | loss: 0.4695634
+	speed: 1.0816s/iter; left time: 49028.7885s
+	iters: 1300, epoch: 1 | loss: 0.4962471
+	speed: 1.0826s/iter; left time: 48966.2968s
+	iters: 1400, epoch: 1 | loss: 0.3354237
+	speed: 1.0817s/iter; left time: 48816.9215s
+	iters: 1500, epoch: 1 | loss: 0.3642778
+	speed: 1.0815s/iter; left time: 48703.2498s
+	iters: 1600, epoch: 1 | loss: 0.4483392
+	speed: 1.0820s/iter; left time: 48614.6990s
+	iters: 1700, epoch: 1 | loss: 0.3731262
+	speed: 1.0817s/iter; left time: 48494.7418s
+	iters: 1800, epoch: 1 | loss: 0.3481683
+	speed: 1.0812s/iter; left time: 48363.5798s
+	iters: 1900, epoch: 1 | loss: 0.3688813
+	speed: 1.0815s/iter; left time: 48267.7561s
+	iters: 2000, epoch: 1 | loss: 0.3827255
+	speed: 1.0815s/iter; left time: 48160.1696s
+	iters: 2100, epoch: 1 | loss: 0.4880811
+	speed: 1.0816s/iter; left time: 48054.5162s
+	iters: 2200, epoch: 1 | loss: 0.4090465
+	speed: 1.0812s/iter; left time: 47930.5503s
+	iters: 2300, epoch: 1 | loss: 0.3589960
+	speed: 1.0817s/iter; left time: 47846.4508s
+	iters: 2400, epoch: 1 | loss: 0.3355822
+	speed: 1.0814s/iter; left time: 47723.3366s
+	iters: 2500, epoch: 1 | loss: 0.3568510
+	speed: 1.0814s/iter; left time: 47616.7537s
+	iters: 2600, epoch: 1 | loss: 0.3500413
+	speed: 1.0818s/iter; left time: 47525.5249s
+	iters: 2700, epoch: 1 | loss: 0.3629012
+	speed: 1.0812s/iter; left time: 47390.6797s
+	iters: 2800, epoch: 1 | loss: 0.3727939
+	speed: 1.0812s/iter; left time: 47283.8378s
+	iters: 2900, epoch: 1 | loss: 0.2942094
+	speed: 1.0805s/iter; left time: 47141.5178s
+	iters: 3000, epoch: 1 | loss: 0.5541101
+	speed: 1.0811s/iter; left time: 47062.3985s
+	iters: 3100, epoch: 1 | loss: 0.5014978
+	speed: 1.0813s/iter; left time: 46960.3381s
+	iters: 3200, epoch: 1 | loss: 0.3848417
+	speed: 1.0817s/iter; left time: 46872.6214s
+	iters: 3300, epoch: 1 | loss: 0.3747724
+	speed: 1.0815s/iter; left time: 46756.1411s
+	iters: 3400, epoch: 1 | loss: 0.3146796
+	speed: 1.0809s/iter; left time: 46619.9878s
+	iters: 3500, epoch: 1 | loss: 0.3701932
+	speed: 1.0808s/iter; left time: 46507.2239s
+	iters: 3600, epoch: 1 | loss: 0.3733530
+	speed: 1.0811s/iter; left time: 46412.6065s
+	iters: 3700, epoch: 1 | loss: 0.3514121
+	speed: 1.0811s/iter; left time: 46306.7309s

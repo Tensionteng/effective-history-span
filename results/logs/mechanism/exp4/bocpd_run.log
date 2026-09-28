@@ -1,0 +1,31 @@
+[bocpd] ETTh1 done (59s)
+[bocpd] ETTh2 done (119s)
+[bocpd] ETTm1 done (361s)
+[bocpd] ETTm2 done (602s)
+[bocpd] exchange_rate done (643s)
+[bocpd] weather done (1329s)
+[bocpd] electricity done (1719s)
+[bocpd] traffic done (1992s)
+# Exp4: BOCPD expected run length vs measured best seq_len
+
+R_MAX=3000, burn-in=500, channels<=24, kappa0=1.0
+
+| dataset | H=0.02 | H=0.01 | H=0.004 | H=0.002 | H=0.001 | best sl iTr | best sl DLin |
+|---|---|---|---|---|---|---|---|
+| ETTh1 | 65 | 76 | 90 | 102 | 114 | 720 | 1440 |
+| ETTh2 | 234 | 248 | 262 | 271 | 279 | 96 | 1440 |
+| ETTm1 | 60 | 64 | 68 | 71 | 74 | 336 | 336 |
+| ETTm2 | 363 | 377 | 390 | 399 | 407 | 336 | 1440 |
+| exchange_rate | 210 | 215 | 219 | 221 | 223 | 96 | 96 |
+| weather | 291 | 297 | 301 | 303 | 305 | 336 | 2880 |
+| electricity | 53 | 68 | 122 | 234 | 372 | 2880 | 2880 |
+| traffic | 48 | 59 | 87 | 146 | 238 | 2880 | 2880 |
+
+- H=0.02: Spearman(E[r], best sl) iTransformer rho=-0.667 (p~0.028), DLinear rho=-0.225 (p~0.571), mean-of-two rho=-0.395 (p~0.292)
+- H=0.01: Spearman(E[r], best sl) iTransformer rho=-0.581 (p~0.081), DLinear rho=-0.100 (p~0.805), mean-of-two rho=-0.263 (p~0.503)
+- H=0.004: Spearman(E[r], best sl) iTransformer rho=-0.457 (p~0.208), DLinear rho=0.100 (p~0.805), mean-of-two rho=-0.072 (p~0.860)
+- H=0.002: Spearman(E[r], best sl) iTransformer rho=-0.272 (p~0.489), DLinear rho=0.325 (p~0.399), mean-of-two rho=0.144 (p~0.722)
+- H=0.001: Spearman(E[r], best sl) iTransformer rho=0.111 (p~0.784), DLinear rho=0.551 (p~0.106), mean-of-two rho=0.443 (p~0.226)
+
+Note: with a constant hazard, the per-step posterior CP probability p(r_t=0) is identically H by construction (both posterior branches scale with the same predictive mass), so the data-driven statistic is the run-length distribution: E[r] above; downward resets of E[r] in the curves mark detected changepoints.
+[bocpd] all done in 1994s

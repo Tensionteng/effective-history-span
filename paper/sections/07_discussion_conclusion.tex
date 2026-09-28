@@ -1,0 +1,9 @@
+\section{Discussion and Conclusion}
+
+\paragraph{Scope.}
+Our trained-model measurements cover fourteen public datasets (Appendix \ref{app:ext}), still modest in size and partially criticized for artifacts \citep{fern, timebench}. A GIFT-Eval-scale zero-shot study (25 tasks) shows the law does not transfer to strongly normalized foundation models, where longer context rarely hurts (Appendix \ref{app:gift}); its scope is trained models at benchmark scale. An earlier changepoint-trigger design was removed after resets proved unhelpful (Appendix \ref{app:action}). The full 480-run main matrix carries three seeds per cell (Appendix \ref{app:ledger}). The changepoint formalism assumes abrupt switches, and our two-axis statistics currently handle drift only through the segment-variance index.
+
+\paragraph{What changes for practice.}
+For benchmarks, reporting a single fixed lookback conflates model quality with span mismatch; sweeps or budgeted spans should be standard. For foundation models, context length is not a free resource to maximize but a budget to allocate, computable from the context itself. For architecture design, the capacity to suppress stale content determines whether longer context is exploitable at all.
+
+We asked how far back a forecaster should look and found the answer measurable, explainable, and exploitable: the effective history span varies by 30x across problems, is set by the balance of non-stationary cost and regime-invariant benefit, is partially predictable from cheap statistics, and can be enforced by a simple input budget. Lookback is a resource to measure, predict, and spend deliberately.

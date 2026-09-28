@@ -1,0 +1,84 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_exchange_rate_DLinear_2880_s2022Model:              DLinear             
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/exchange_rate/
+  Data Path:          exchange_rate.csv   Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            2880                Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             8                   Dec In:             8                   
+  C Out:              8                   d model:            128                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               128                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: DLinear ...
+>>>>>>>start training : long_term_forecast_LBv2_exchange_rate_DLinear_2880_s2022_DLinear_custom_ftM_sl2880_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 2336
+val 665
+test 1422
+Epoch: 1 cost time: 0.615248441696167
+Epoch: 1, Steps: 73 | Train Loss: 0.3643649 Vali Loss: 0.7673058 Test Loss: 1.1591070
+Validation loss decreased (inf --> 0.767306).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2 cost time: 0.5143256187438965
+Epoch: 2, Steps: 73 | Train Loss: 0.2167538 Vali Loss: 0.5509320 Test Loss: 0.7816397
+Validation loss decreased (0.767306 --> 0.550932).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3 cost time: 0.5232326984405518
+Epoch: 3, Steps: 73 | Train Loss: 0.1850622 Vali Loss: 0.4601577 Test Loss: 0.6375859
+Validation loss decreased (0.550932 --> 0.460158).  Saving model ...
+Updating learning rate to 2.5e-05
+Epoch: 4 cost time: 0.4710719585418701
+Epoch: 4, Steps: 73 | Train Loss: 0.1742038 Vali Loss: 0.4940342 Test Loss: 0.6215465
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 1.25e-05
+Epoch: 5 cost time: 0.4721353054046631
+Epoch: 5, Steps: 73 | Train Loss: 0.1689178 Vali Loss: 0.4535619 Test Loss: 0.6259740
+Validation loss decreased (0.460158 --> 0.453562).  Saving model ...
+Updating learning rate to 6.25e-06
+Epoch: 6 cost time: 0.510676383972168
+Epoch: 6, Steps: 73 | Train Loss: 0.1664413 Vali Loss: 0.4871738 Test Loss: 0.6216025
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 3.125e-06
+Epoch: 7 cost time: 0.44277191162109375
+Epoch: 7, Steps: 73 | Train Loss: 0.1652446 Vali Loss: 0.4655797 Test Loss: 0.6087810
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.5625e-06
+Epoch: 8 cost time: 0.5177962779998779
+Epoch: 8, Steps: 73 | Train Loss: 0.1646169 Vali Loss: 0.4695100 Test Loss: 0.6110445
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBv2_exchange_rate_DLinear_2880_s2022_DLinear_custom_ftM_sl2880_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 1422
+test shape: (1422, 96, 8) (1422, 96, 8)
+test shape: (1422, 96, 8) (1422, 96, 8)
+mse:0.6246475577354431, mae:0.635455310344696, dtw:Not calculated

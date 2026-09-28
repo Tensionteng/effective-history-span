@@ -1,0 +1,77 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_ETTh2_TimesNet_720_s2022Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               ETTh2               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh2.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            720                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            32                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               32                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: TimesNet ...
+>>>>>>>start training : long_term_forecast_LBv2_ETTh2_TimesNet_720_s2022_TimesNet_ETTh2_ftM_sl720_ll48_pl96_dm32_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 5665/7825 windows (max_train_windows=5665)
+train 5665
+val 2785
+test 2785
+	iters: 100, epoch: 1 | loss: 0.3791832
+	speed: 0.4438s/iter; left time: 746.0868s
+Epoch: 1 cost time: 75.6779773235321
+Epoch: 1, Steps: 178 | Train Loss: 0.5020154 Vali Loss: 0.3397656 Test Loss: 0.3853876
+Validation loss decreased (inf --> 0.339766).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.4347809
+	speed: 0.8525s/iter; left time: 1281.2603s
+Epoch: 2 cost time: 65.90373182296753
+Epoch: 2, Steps: 178 | Train Loss: 0.3331805 Vali Loss: 0.3544828 Test Loss: 0.4534979
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.2841691
+	speed: 0.4652s/iter; left time: 616.4128s
+Epoch: 3 cost time: 27.219269514083862
+Epoch: 3, Steps: 178 | Train Loss: 0.2899847 Vali Loss: 0.3817895 Test Loss: 0.4360125
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.2316586
+	speed: 0.2847s/iter; left time: 326.5526s
+Epoch: 4 cost time: 25.38686442375183
+Epoch: 4, Steps: 178 | Train Loss: 0.2818887 Vali Loss: 0.4143438 Test Loss: 0.4361524
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBv2_ETTh2_TimesNet_720_s2022_TimesNet_ETTh2_ftM_sl720_ll48_pl96_dm32_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2785
+test shape: (2785, 96, 7) (2785, 96, 7)
+test shape: (2785, 96, 7) (2785, 96, 7)
+mse:0.38487252593040466, mae:0.41372281312942505, dtw:Not calculated

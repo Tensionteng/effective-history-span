@@ -1,0 +1,93 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           PLv2_DLinear_drift_er1000_sl720_s2021Model:              DLinear             
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/power_law/
+  Data Path:          drift_er1000.csv    Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            720                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             4                   Dec In:             4                   
+  C Out:              4                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               64                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       5                   Batch Size:         64                  
+  Patience:           3                   Learning Rate:      0.001               
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: DLinear ...
+>>>>>>>start training : long_term_forecast_PLv2_DLinear_drift_er1000_sl720_s2021_DLinear_custom_ftM_sl720_ll48_pl96_dm64_nh8_el2_dl1_df64_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 14525/16685 windows (max_train_windows=14525)
+train 14525
+val 2405
+test 4905
+	iters: 100, epoch: 1 | loss: 1.0237855
+	speed: 0.0205s/iter; left time: 21.2508s
+	iters: 200, epoch: 1 | loss: 1.0038350
+	speed: 0.0040s/iter; left time: 3.7400s
+Epoch: 1 cost time: 1.193018913269043
+Epoch: 1, Steps: 227 | Train Loss: 1.0080090 Vali Loss: 1.0077413 Test Loss: 1.0051811
+Validation loss decreased (inf --> 1.007741).  Saving model ...
+Updating learning rate to 0.001
+	iters: 100, epoch: 2 | loss: 1.0190248
+	speed: 0.0112s/iter; left time: 9.0533s
+	iters: 200, epoch: 2 | loss: 1.0320776
+	speed: 0.0040s/iter; left time: 2.8485s
+Epoch: 2 cost time: 0.9840993881225586
+Epoch: 2, Steps: 227 | Train Loss: 1.0053454 Vali Loss: 1.0098780 Test Loss: 1.0066017
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.0005
+	iters: 100, epoch: 3 | loss: 0.9759481
+	speed: 0.0116s/iter; left time: 6.7274s
+	iters: 200, epoch: 3 | loss: 0.9804832
+	speed: 0.0040s/iter; left time: 1.9404s
+Epoch: 3 cost time: 0.9713702201843262
+Epoch: 3, Steps: 227 | Train Loss: 0.9913340 Vali Loss: 0.9987167 Test Loss: 0.9944206
+Validation loss decreased (1.007741 --> 0.998717).  Saving model ...
+Updating learning rate to 0.00025
+	iters: 100, epoch: 4 | loss: 0.9709568
+	speed: 0.0112s/iter; left time: 3.9841s
+	iters: 200, epoch: 4 | loss: 0.9859639
+	speed: 0.0040s/iter; left time: 1.0260s
+Epoch: 4 cost time: 0.9722630977630615
+Epoch: 4, Steps: 227 | Train Loss: 0.9812590 Vali Loss: 0.9942892 Test Loss: 0.9901956
+Validation loss decreased (0.998717 --> 0.994289).  Saving model ...
+Updating learning rate to 0.000125
+	iters: 100, epoch: 5 | loss: 0.9660419
+	speed: 0.0116s/iter; left time: 1.4800s
+	iters: 200, epoch: 5 | loss: 0.9662809
+	speed: 0.0040s/iter; left time: 0.1115s
+Epoch: 5 cost time: 0.9917581081390381
+Epoch: 5, Steps: 227 | Train Loss: 0.9755956 Vali Loss: 0.9926533 Test Loss: 0.9887380
+Validation loss decreased (0.994289 --> 0.992653).  Saving model ...
+Updating learning rate to 6.25e-05
+>>>>>>>testing : long_term_forecast_PLv2_DLinear_drift_er1000_sl720_s2021_DLinear_custom_ftM_sl720_ll48_pl96_dm64_nh8_el2_dl1_df64_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 4905
+test shape: (4905, 96, 4) (4905, 96, 4)
+test shape: (4905, 96, 4) (4905, 96, 4)
+mse:0.9882808327674866, mae:0.7912322878837585, dtw:Not calculated

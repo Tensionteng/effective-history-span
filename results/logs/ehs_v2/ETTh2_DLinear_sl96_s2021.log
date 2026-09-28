@@ -1,0 +1,83 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_ETTh2_DLinear_96_s2021Model:              DLinear             
+
+[1mData Loader[0m
+  Data:               ETTh2               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh2.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            96                  Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            128                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               128                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: DLinear ...
+>>>>>>>start training : long_term_forecast_LBv2_ETTh2_DLinear_96_s2021_DLinear_ETTh2_ftM_sl96_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 5665/8449 windows (max_train_windows=5665)
+train 5665
+val 2785
+test 2785
+	iters: 100, epoch: 1 | loss: 0.4413075
+	speed: 0.0292s/iter; left time: 49.1624s
+Epoch: 1 cost time: 1.9524836540222168
+Epoch: 1, Steps: 178 | Train Loss: 0.4681495 Vali Loss: 0.2684190 Test Loss: 0.3741952
+Validation loss decreased (inf --> 0.268419).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.2958999
+	speed: 0.0457s/iter; left time: 68.6920s
+Epoch: 2 cost time: 2.5691192150115967
+Epoch: 2, Steps: 178 | Train Loss: 0.4314239 Vali Loss: 0.2505553 Test Loss: 0.3498435
+Validation loss decreased (0.268419 --> 0.250555).  Saving model ...
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.3309869
+	speed: 0.0805s/iter; left time: 106.6974s
+Epoch: 3 cost time: 5.1559202671051025
+Epoch: 3, Steps: 178 | Train Loss: 0.4196479 Vali Loss: 0.2513221 Test Loss: 0.3541651
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.2427226
+	speed: 0.1167s/iter; left time: 133.8740s
+Epoch: 4 cost time: 5.3433518409729
+Epoch: 4, Steps: 178 | Train Loss: 0.4158700 Vali Loss: 0.2556846 Test Loss: 0.3562691
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.25e-05
+	iters: 100, epoch: 5 | loss: 0.2636012
+	speed: 0.1140s/iter; left time: 110.4232s
+Epoch: 5 cost time: 5.791476011276245
+Epoch: 5, Steps: 178 | Train Loss: 0.4143447 Vali Loss: 0.2513179 Test Loss: 0.3571095
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBv2_ETTh2_DLinear_96_s2021_DLinear_ETTh2_ftM_sl96_ll48_pl96_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2785
+test shape: (2785, 96, 7) (2785, 96, 7)
+test shape: (2785, 96, 7) (2785, 96, 7)
+mse:0.3524921238422394, mae:0.4056163430213928, dtw:Not calculated

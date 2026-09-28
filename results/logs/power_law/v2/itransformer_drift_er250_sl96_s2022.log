@@ -1,0 +1,93 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           PLv2_iTransformer_drift_er250_sl96_s2022Model:              iTransformer        
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/power_law/
+  Data Path:          drift_er250.csv     Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            96                  Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             4                   Dec In:             4                   
+  C Out:              4                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               64                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       5                   Batch Size:         64                  
+  Patience:           3                   Learning Rate:      0.001               
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: iTransformer ...
+>>>>>>>start training : long_term_forecast_PLv2_iTransformer_drift_er250_sl96_s2022_iTransformer_custom_ftM_sl96_ll48_pl96_dm64_nh8_el2_dl1_df64_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 14525/17309 windows (max_train_windows=14525)
+train 14525
+val 2405
+test 4905
+	iters: 100, epoch: 1 | loss: 0.8521813
+	speed: 0.0244s/iter; left time: 25.3227s
+	iters: 200, epoch: 1 | loss: 0.8540998
+	speed: 0.0063s/iter; left time: 5.9076s
+Epoch: 1 cost time: 1.8733878135681152
+Epoch: 1, Steps: 227 | Train Loss: 0.8736140 Vali Loss: 0.8444806 Test Loss: 0.8514287
+Validation loss decreased (inf --> 0.844481).  Saving model ...
+Updating learning rate to 0.001
+	iters: 100, epoch: 2 | loss: 0.8498982
+	speed: 0.0136s/iter; left time: 11.0409s
+	iters: 200, epoch: 2 | loss: 0.8622889
+	speed: 0.0063s/iter; left time: 4.4610s
+Epoch: 2 cost time: 1.4976136684417725
+Epoch: 2, Steps: 227 | Train Loss: 0.8572081 Vali Loss: 0.8434536 Test Loss: 0.8503572
+Validation loss decreased (0.844481 --> 0.843454).  Saving model ...
+Updating learning rate to 0.0005
+	iters: 100, epoch: 3 | loss: 0.8671588
+	speed: 0.0134s/iter; left time: 7.7872s
+	iters: 200, epoch: 3 | loss: 0.8400887
+	speed: 0.0063s/iter; left time: 3.0328s
+Epoch: 3 cost time: 1.5036652088165283
+Epoch: 3, Steps: 227 | Train Loss: 0.8550006 Vali Loss: 0.8427944 Test Loss: 0.8497035
+Validation loss decreased (0.843454 --> 0.842794).  Saving model ...
+Updating learning rate to 0.00025
+	iters: 100, epoch: 4 | loss: 0.8474740
+	speed: 0.0134s/iter; left time: 4.7510s
+	iters: 200, epoch: 4 | loss: 0.8292930
+	speed: 0.0065s/iter; left time: 1.6482s
+Epoch: 4 cost time: 1.5047743320465088
+Epoch: 4, Steps: 227 | Train Loss: 0.8542365 Vali Loss: 0.8423486 Test Loss: 0.8493627
+Validation loss decreased (0.842794 --> 0.842349).  Saving model ...
+Updating learning rate to 0.000125
+	iters: 100, epoch: 5 | loss: 0.8427819
+	speed: 0.0136s/iter; left time: 1.7406s
+	iters: 200, epoch: 5 | loss: 0.8488850
+	speed: 0.0064s/iter; left time: 0.1783s
+Epoch: 5 cost time: 1.5116212368011475
+Epoch: 5, Steps: 227 | Train Loss: 0.8538102 Vali Loss: 0.8422463 Test Loss: 0.8491373
+Validation loss decreased (0.842349 --> 0.842246).  Saving model ...
+Updating learning rate to 6.25e-05
+>>>>>>>testing : long_term_forecast_PLv2_iTransformer_drift_er250_sl96_s2022_iTransformer_custom_ftM_sl96_ll48_pl96_dm64_nh8_el2_dl1_df64_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 4905
+test shape: (4905, 96, 4) (4905, 96, 4)
+test shape: (4905, 96, 4) (4905, 96, 4)
+mse:0.8490875363349915, mae:0.7329051494598389, dtw:Not calculated

@@ -1,0 +1,92 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           MECH_exchange_rate_PTG_none_2880_s2022Model:              PatchTSTGated       
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/exchange_rate/
+  Data Path:          exchange_rate.csv   Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            2880                Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             8                   Dec In:             8                   
+  C Out:              8                   d model:            512                 
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               2048                
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        4                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: PatchTSTGated ...
+>>>>>>>start training : long_term_forecast_MECH_exchange_rate_PTG_none_2880_s2022_PatchTSTGated_custom_ftM_sl2880_ll48_pl96_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 2336
+val 665
+test 1422
+Epoch: 1 cost time: 13.626412391662598
+Epoch: 1, Steps: 73 | Train Loss: 3.1357190 Vali Loss: 0.5894758 Test Loss: 0.4602149
+Validation loss decreased (inf --> 0.589476).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2 cost time: 13.138547658920288
+Epoch: 2, Steps: 73 | Train Loss: 0.3206258 Vali Loss: 0.5051631 Test Loss: 0.5078285
+Validation loss decreased (0.589476 --> 0.505163).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3 cost time: 13.013258457183838
+Epoch: 3, Steps: 73 | Train Loss: 0.2646369 Vali Loss: 0.5158006 Test Loss: 0.3639591
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 2.5e-05
+Epoch: 4 cost time: 13.000259160995483
+Epoch: 4, Steps: 73 | Train Loss: 0.2428697 Vali Loss: 0.5179107 Test Loss: 0.3575584
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.25e-05
+Epoch: 5 cost time: 12.65818476676941
+Epoch: 5, Steps: 73 | Train Loss: 0.2338888 Vali Loss: 0.4753153 Test Loss: 0.4177868
+Validation loss decreased (0.505163 --> 0.475315).  Saving model ...
+Updating learning rate to 6.25e-06
+Epoch: 6 cost time: 12.201311349868774
+Epoch: 6, Steps: 73 | Train Loss: 0.2289360 Vali Loss: 0.4795188 Test Loss: 0.4037906
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 3.125e-06
+Epoch: 7 cost time: 13.050818920135498
+Epoch: 7, Steps: 73 | Train Loss: 0.2252294 Vali Loss: 0.4724180 Test Loss: 0.4182304
+Validation loss decreased (0.475315 --> 0.472418).  Saving model ...
+Updating learning rate to 1.5625e-06
+Epoch: 8 cost time: 13.104832410812378
+Epoch: 8, Steps: 73 | Train Loss: 0.2250920 Vali Loss: 0.4732557 Test Loss: 0.4116736
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 7.8125e-07
+Epoch: 9 cost time: 13.019728422164917
+Epoch: 9, Steps: 73 | Train Loss: 0.2230850 Vali Loss: 0.4731785 Test Loss: 0.4081842
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 3.90625e-07
+Epoch: 10 cost time: 13.170374393463135
+Epoch: 10, Steps: 73 | Train Loss: 0.2240412 Vali Loss: 0.4732669 Test Loss: 0.4102947
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_MECH_exchange_rate_PTG_none_2880_s2022_PatchTSTGated_custom_ftM_sl2880_ll48_pl96_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 1422
+test shape: (1422, 96, 8) (1422, 96, 8)
+test shape: (1422, 96, 8) (1422, 96, 8)
+mse:0.4156741499900818, mae:0.4806782603263855, dtw:Not calculated

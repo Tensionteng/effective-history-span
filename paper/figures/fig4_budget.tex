@@ -1,0 +1,30 @@
+\begin{figure}[!htb]
+  \centering
+  \begin{tikzpicture}[
+    font=\footnotesize,
+    box/.style={draw, rounded corners=1pt, align=center, minimum height=5.5mm, inner sep=2pt},
+    data/.style={box, fill=blue!6},
+    comp/.style={box, fill=orange!10},
+    gate/.style={box, fill=red!8},
+    arr/.style={->, thick},
+    lbl/.style={font=\scriptsize\itshape, midway, above}
+  ]
+  % main path: history -> gate -> model -> forecast
+  \node[data] (hist) at (0,0) {history window\\$x_{t-L+1:t}$};
+  \node[gate, right=4mm of hist] (gate) {budget gate:\\truncate or decay};
+  \node[data, right=4mm of gate] (model) {forecasting model\\(any backbone)};
+  \node[data, right=4mm of model] (fcst) {forecast\\$\hat{x}_{t+1:t+H}$};
+  % budget path
+  \node[comp, below=6mm of hist] (stats) {two-axis statistics\\drift, periodicity, long memory};
+  \node[comp, right=4mm of stats] (pred) {budget predictor\\(Section \ref{sec:predictfull})};
+  % edges
+  \draw[arr] (hist) -- (gate);
+  \draw[arr] (gate) -- (model);
+  \draw[arr] (model) -- (fcst);
+  \draw[arr] (hist.south) -- (stats.north);
+  \draw[arr] (stats) -- (pred);
+  \draw[arr] (pred) -| node[lbl, pos=0.25] {$b$} (gate.south);
+  \end{tikzpicture}
+  \caption{History budgeting. Context statistics predict a per-window budget $b$; the input-side gate then either truncates the history to the most recent $b$ steps (hard budget) or weights it by exponential decay with equivalent window $N^*{=}b$ (decay budget, the cross-family default of Section \ref{sec:method}).}
+  \label{fig:budget}
+\end{figure}

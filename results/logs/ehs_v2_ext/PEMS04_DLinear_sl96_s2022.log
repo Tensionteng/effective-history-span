@@ -1,0 +1,109 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBext_PEMS04_DLinear_96_s2022Model:              DLinear             
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/PEMS04/   
+  Data Path:          PEMS04.csv          Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            96                  Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             307                 Dec In:             307                 
+  C Out:              307                 d model:            512                 
+  n heads:            8                   e layers:           3                   
+  d layers:           1                   d FF:               512                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        4                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         16                  
+  Patience:           3                   Learning Rate:      0.0005              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: DLinear ...
+>>>>>>>start training : long_term_forecast_LBext_PEMS04_DLinear_96_s2022_DLinear_custom_ftM_sl96_ll48_pl96_dm512_nh8_el3_dl1_df512_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 8919/11703 windows (max_train_windows=8919)
+train 8919
+val 1605
+test 3303
+	iters: 100, epoch: 1 | loss: 0.8687404
+	speed: 0.0416s/iter; left time: 227.9460s
+	iters: 200, epoch: 1 | loss: 0.7599010
+	speed: 0.0153s/iter; left time: 82.0897s
+	iters: 300, epoch: 1 | loss: 1.1183945
+	speed: 0.0143s/iter; left time: 75.4472s
+	iters: 400, epoch: 1 | loss: 0.8749492
+	speed: 0.0149s/iter; left time: 77.3246s
+	iters: 500, epoch: 1 | loss: 0.8772738
+	speed: 0.0146s/iter; left time: 74.2295s
+Epoch: 1 cost time: 8.950002193450928
+Epoch: 1, Steps: 558 | Train Loss: 0.8665053 Vali Loss: 1.1096524 Test Loss: 0.9219643
+Validation loss decreased (inf --> 1.109652).  Saving model ...
+Updating learning rate to 0.0005
+	iters: 100, epoch: 2 | loss: 0.9115189
+	speed: 0.0761s/iter; left time: 374.7643s
+	iters: 200, epoch: 2 | loss: 0.9167845
+	speed: 0.0148s/iter; left time: 71.5234s
+	iters: 300, epoch: 2 | loss: 0.6813809
+	speed: 0.0141s/iter; left time: 66.3648s
+	iters: 400, epoch: 2 | loss: 0.7625897
+	speed: 0.0139s/iter; left time: 64.0763s
+	iters: 500, epoch: 2 | loss: 0.7946462
+	speed: 0.0152s/iter; left time: 68.7467s
+Epoch: 2 cost time: 8.507877349853516
+Epoch: 2, Steps: 558 | Train Loss: 0.8474100 Vali Loss: 1.1283647 Test Loss: 0.9203644
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.00025
+	iters: 100, epoch: 3 | loss: 0.5942414
+	speed: 0.0790s/iter; left time: 344.9611s
+	iters: 200, epoch: 3 | loss: 0.6565788
+	speed: 0.0158s/iter; left time: 67.4915s
+	iters: 300, epoch: 3 | loss: 0.9227326
+	speed: 0.0150s/iter; left time: 62.3330s
+	iters: 400, epoch: 3 | loss: 0.7879485
+	speed: 0.0156s/iter; left time: 63.4406s
+	iters: 500, epoch: 3 | loss: 0.8067105
+	speed: 0.0152s/iter; left time: 60.4075s
+Epoch: 3 cost time: 8.927301168441772
+Epoch: 3, Steps: 558 | Train Loss: 0.8465401 Vali Loss: 1.1194972 Test Loss: 0.9170887
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 0.000125
+	iters: 100, epoch: 4 | loss: 0.6107137
+	speed: 0.0791s/iter; left time: 301.2902s
+	iters: 200, epoch: 4 | loss: 0.8310208
+	speed: 0.0147s/iter; left time: 54.6534s
+	iters: 300, epoch: 4 | loss: 0.7053407
+	speed: 0.0148s/iter; left time: 53.2571s
+	iters: 400, epoch: 4 | loss: 0.5755882
+	speed: 0.0146s/iter; left time: 51.2392s
+	iters: 500, epoch: 4 | loss: 0.8411855
+	speed: 0.0148s/iter; left time: 50.4898s
+Epoch: 4 cost time: 8.484598875045776
+Epoch: 4, Steps: 558 | Train Loss: 0.8463254 Vali Loss: 1.1245163 Test Loss: 0.9171607
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBext_PEMS04_DLinear_96_s2022_DLinear_custom_ftM_sl96_ll48_pl96_dm512_nh8_el3_dl1_df512_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 3303
+test shape: (3303, 96, 307) (3303, 96, 307)
+test shape: (3303, 96, 307) (3303, 96, 307)
+mse:0.9217524528503418, mae:0.598120927810669, dtw:Not calculated

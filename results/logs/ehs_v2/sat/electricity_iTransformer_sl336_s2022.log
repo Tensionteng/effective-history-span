@@ -1,0 +1,81 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBsat_electricity_iTransformer_336_s2022Model:              iTransformer        
+
+[1mData Loader[0m
+  Data:               custom              Root Path:          ./dataset/electricity/
+  Data Path:          electricity.csv     Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            336                 Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             321                 Dec In:             321                 
+  C Out:              321                 d model:            512                 
+  n heads:            8                   e layers:           3                   
+  d layers:           1                   d FF:               512                 
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       10                  Batch Size:         16                  
+  Patience:           3                   Learning Rate:      0.0005              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: iTransformer ...
+>>>>>>>start training : long_term_forecast_LBsat_electricity_iTransformer_336_s2022_iTransformer_custom_ftM_sl336_ll48_pl96_dm512_nh8_el3_dl1_df512_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 12557/17981 windows (max_train_windows=12557)
+train 12557
+val 2537
+test 5165
+	iters: 100, epoch: 1 | loss: 0.1571081
+	speed: 0.4218s/iter; left time: 3269.0888s
+	iters: 200, epoch: 1 | loss: 0.1643453
+	speed: 0.3145s/iter; left time: 2406.4279s
+	iters: 300, epoch: 1 | loss: 0.1580033
+	speed: 0.3200s/iter; left time: 2415.9435s
+	iters: 400, epoch: 1 | loss: 0.1636911
+	speed: 0.3134s/iter; left time: 2335.2125s
+	iters: 500, epoch: 1 | loss: 0.1396058
+	speed: 0.3010s/iter; left time: 2212.6419s
+	iters: 600, epoch: 1 | loss: 0.1409128
+	speed: 0.3068s/iter; left time: 2224.5450s
+	iters: 700, epoch: 1 | loss: 0.1316336
+	speed: 0.3241s/iter; left time: 2317.6047s
+Epoch: 1 cost time: 251.15613293647766
+Epoch: 1, Steps: 785 | Train Loss: 0.1635158 Vali Loss: 0.1210888 Test Loss: 0.1400140
+Validation loss decreased (inf --> 0.121089).  Saving model ...
+Updating learning rate to 0.0005
+	iters: 100, epoch: 2 | loss: 0.1689301
+	speed: 5.0373s/iter; left time: 35089.8845s
+	iters: 200, epoch: 2 | loss: 0.1199104
+	speed: 0.3278s/iter; left time: 2250.5940s
+	iters: 300, epoch: 2 | loss: 0.1455459
+	speed: 0.3087s/iter; left time: 2088.4650s
+	iters: 400, epoch: 2 | loss: 0.1612375
+	speed: 0.3103s/iter; left time: 2068.4742s
+	iters: 500, epoch: 2 | loss: 0.1576363
+	speed: 0.3175s/iter; left time: 2084.7647s
+	iters: 600, epoch: 2 | loss: 0.1144876
+	speed: 0.3160s/iter; left time: 2043.2811s
+	iters: 700, epoch: 2 | loss: 0.1245096
+	speed: 0.3184s/iter; left time: 2026.9654s
+Epoch: 2 cost time: 249.60943818092346

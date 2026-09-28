@@ -1,0 +1,77 @@
+Using GPU
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           LBv2_ETTh2_TimesNet_1440_s2023Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               ETTh2               Root Path:          ./dataset/ETT-small/
+  Data Path:          ETTh2.csv           Features:           M                   
+  Target:             OT                  Freq:               h                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            1440                Label Len:          48                  
+  Pred Len:           96                  Seasonal Patterns:  Monthly             
+  Inverse:            0                   
+
+[1mModel Parameters[0m
+  Top k:              5                   Num Kernels:        6                   
+  Enc In:             7                   Dec In:             7                   
+  C Out:              7                   d model:            32                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               32                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        2                   Itr:                1                   
+  Train Epochs:       10                  Batch Size:         32                  
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                Exp                 Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+🚀 Lazy Loading: TimesNet ...
+>>>>>>>start training : long_term_forecast_LBv2_ETTh2_TimesNet_1440_s2023_TimesNet_ETTh2_ftM_sl1440_ll48_pl96_dm32_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train window subsample: keep 5665/7105 windows (max_train_windows=5665)
+train 5665
+val 2785
+test 2785
+	iters: 100, epoch: 1 | loss: 0.8959484
+	speed: 0.1161s/iter; left time: 195.1360s
+Epoch: 1 cost time: 17.665265798568726
+Epoch: 1, Steps: 178 | Train Loss: 0.6153567 Vali Loss: 0.4106472 Test Loss: 0.3890013
+Validation loss decreased (inf --> 0.410647).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.5273321
+	speed: 0.2200s/iter; left time: 330.5856s
+Epoch: 2 cost time: 16.561167001724243
+Epoch: 2, Steps: 178 | Train Loss: 0.3703166 Vali Loss: 0.4595520 Test Loss: 0.4184063
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.2132605
+	speed: 0.2195s/iter; left time: 290.9009s
+Epoch: 3 cost time: 16.604296684265137
+Epoch: 3, Steps: 178 | Train Loss: 0.3121379 Vali Loss: 0.4939957 Test Loss: 0.4400575
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.1939315
+	speed: 0.2199s/iter; left time: 252.1792s
+Epoch: 4 cost time: 16.563854455947876
+Epoch: 4, Steps: 178 | Train Loss: 0.2894483 Vali Loss: 0.4942153 Test Loss: 0.4568621
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_LBv2_ETTh2_TimesNet_1440_s2023_TimesNet_ETTh2_ftM_sl1440_ll48_pl96_dm32_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2785
+test shape: (2785, 96, 7) (2785, 96, 7)
+test shape: (2785, 96, 7) (2785, 96, 7)
+mse:0.38543230295181274, mae:0.4332748055458069, dtw:Not calculated
