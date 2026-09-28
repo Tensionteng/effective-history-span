@@ -40,14 +40,18 @@ import numpy as np
 from matplotlib.lines import Line2D
 from scipy.stats import spearmanr
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-SUMMARY = os.path.join(ROOT, 'logs', 'ehs_v2', 'SUMMARY.md')
-TASKB_SAMPLES = os.path.join(ROOT, 'logs', 'ehs_final', 'taskB_samples_train.json')
-TASKB_RESULTS = os.path.join(ROOT, 'logs', 'ehs_final', 'taskB_results_train.json')
-TASKA_SAT = os.path.join(ROOT, 'logs', 'ehs_final', 'taskA_sat.json')
-ATTN_NPZ = os.path.join(ROOT, 'logs', 'mechanism', 'exp1', 'attn_metrics.npz')
-FIGDIR = os.path.join(ROOT, 'paper', 'figs')
-APPTEX = os.path.join(ROOT, 'paper', 'appendix_tables.tex')
+HERE = os.path.abspath(os.path.dirname(__file__))
+# repo layout: <root>/code/analysis/make_figs.py (packaged repos) or <root>/analysis/ (monorepo)
+ROOT = os.path.abspath(os.path.join(HERE, '..', '..' if os.path.basename(os.path.dirname(HERE)) == 'code' else '.'))
+LOGROOT = os.path.join(ROOT, 'results', 'logs') if os.path.isdir(os.path.join(ROOT, 'results', 'logs')) else os.path.join(ROOT, 'logs')
+PAPERDIR = os.path.join(ROOT, 'paper') if os.path.isdir(os.path.join(ROOT, 'paper')) else os.path.join(ROOT, 'results')
+SUMMARY = os.path.join(LOGROOT, 'ehs_v2', 'SUMMARY.md')
+TASKB_SAMPLES = os.path.join(LOGROOT, 'ehs_final', 'taskB_samples_train.json')
+TASKB_RESULTS = os.path.join(LOGROOT, 'ehs_final', 'taskB_results_train.json')
+TASKA_SAT = os.path.join(LOGROOT, 'ehs_final', 'taskA_sat.json')
+ATTN_NPZ = os.path.join(LOGROOT, 'mechanism', 'exp1', 'attn_metrics.npz')
+FIGDIR = os.path.join(PAPERDIR, 'figs')
+APPTEX = os.path.join(PAPERDIR, 'appendix_tables.tex')
 os.makedirs(FIGDIR, exist_ok=True)
 
 SEQ_LENS = [96, 336, 720, 1440, 2880]
